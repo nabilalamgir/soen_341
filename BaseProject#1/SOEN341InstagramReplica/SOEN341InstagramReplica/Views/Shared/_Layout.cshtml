@@ -16,19 +16,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("SOEN341InstagramReplica", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                   
+                    @{/*
+                       * Removed as they aren't of any use but keeping in case.
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*/
+                    }
                     <!--
-        Code below
-        This will check t=if the username has been saved in the session["username"]
-        and if there is, then a link to the user's profile will appear with their
-        username as the visual as well as the option to log out
-    -->
+                    Code below
+                    This will check t=if the username has been saved in the session["username"]
+                    and if there is, then a link to the user's profile will appear with their
+                    username as the visual as well as the option to log out
+                    -->
                     @if (Session["username"] != null)
                     {
                         <li>

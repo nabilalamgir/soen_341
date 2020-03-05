@@ -114,10 +114,16 @@ namespace SOEN341InstagramReplica.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Title,Description,POST,Rating,Date_Posted,User_ID")] UserPost userPost, HttpPostedFileBase image)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
                 if (image != null)
                 {
+                    if (image.ContentType != "image/png" || image.ContentType != "image/jpeg")
+                    {
+                        ModelState.AddModelError("POST", "PNG or JPEG");
+                        ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", userPost.User_ID);
+                        return View(userPost);
+                    }
                     userPost.POST = new byte[image.ContentLength];
                     image.InputStream.Read(userPost.POST, 0, image.ContentLength);
                 }
@@ -164,7 +170,7 @@ namespace SOEN341InstagramReplica.Controllers
             UserPost userPost = db.UserPosts.Find(id);
             db.UserPosts.Remove(userPost);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details2", "Users", new { id = userPost.User_ID});
         }
 
         protected override void Dispose(bool disposing)

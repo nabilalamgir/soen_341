@@ -106,12 +106,12 @@ namespace SOEN341InstagramReplica.Controllers
         }
 
         // GET: Comments/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             Comment comment = db.Comments.Find(id);
             if (comment == null)
             {
@@ -126,9 +126,10 @@ namespace SOEN341InstagramReplica.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Comment comment = db.Comments.Find(id);
+            int postId = comment.Post_ID;
             db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details2", "UserPosts", new { id = postId});
         }
 
         protected override void Dispose(bool disposing)

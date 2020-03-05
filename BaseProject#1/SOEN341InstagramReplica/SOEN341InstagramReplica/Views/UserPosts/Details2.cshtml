@@ -5,8 +5,9 @@
 }
 
 <h2>Post</h2>
-<h1>@Model.post.Title</h1>
-<h1>@Html.ActionLink(Model.postUserName.ToString(), "Details2", "Users", new { id = Model.post.User_ID }, null)</h1>
+<h1>Title: @Model.post.Title</h1>
+<h1>User: @Html.ActionLink(Model.postUserName.ToString(), "Details2", "Users", new { id = Model.post.User_ID }, null)</h1>
+
 @{
     var base64 = Convert.ToBase64String(Model.post.POST);
     var imgsrc = string.Format("data:image/png;base64,{0}", base64);
@@ -21,8 +22,6 @@
 
 }
 
-
-
 <table class="table">
     <tr>
         <th>
@@ -34,12 +33,24 @@
     </tr>
     @foreach (var comment in Model.comments)
     {
-        <tr>
-            <td>@comment.Comment1</td>
-            <td><a href="@Url.Action("Details2", "Users", new { id = comment.User_ID}, null)">
-                @comment.Username</a>
-            </td>
+    <tr>
 
-        </tr>
+        @if (comment.Username == Session["username"].ToString())
+        {
+            <td>@comment.Comment1 | @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.ID, postId = Model.post.ID }, null)</td>
+        }
+        else
+        {
+            <td>
+                @comment.Comment1
+            </td>
+            }
+        <td>
+            <a href="@Url.Action("Details2", "Users", new { id = comment.User_ID}, null)">
+                @comment.Username
+            </a>
+        </td>
+
+    </tr>
     }
 </table>

@@ -46,6 +46,7 @@ namespace SOEN341InstagramReplica.Controllers
                 Session["id"] = userId;
                 return RedirectToAction("Index");
              }
+            
         }
 
 
@@ -60,16 +61,35 @@ namespace SOEN341InstagramReplica.Controllers
         }
 
         [HttpPost]
-        public ActionResult SignUp(User model,string  returnUrl)
+        public ActionResult SignUp([Bind(Include = "First_Name,Last_Name,Username,Password,Email")] User model,string  returnUrl)
         {
-            SOEN341Entities db = new SOEN341Entities();
-            db.Users.Add(model);
-            db.SaveChanges();
-            ModelState.Clear();
-            ViewBag.SuccessMessage = "Registration Successful";
-            Session["id"] = model.ID;
-            Session["username"] = model.First_Name;
-            return RedirectToAction("Index");
+            if (model.First_Name != null && model.Last_Name != null && model.Password != null && model.Email != null)
+            {
+                SOEN341Entities db = new SOEN341Entities();
+                int test = (db.Users.Where(x => x.Username == model.Username).Count());
+                if ((db.Users.Where(x => x.Username == model.Username).Count()) == 0){
+                    model.Date_Joined = DateTime.Now;
+                    db.Users.Add(model);
+                    db.SaveChanges();
+                    ModelState.Clear();
+                    ViewBag.SuccessMessage = "Registration Successful";
+                    Session["id"] = model.ID;
+                    Session["username"] = model.First_Name;
+                    return RedirectToAction("Index");                    
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Username already being used");
+                    return View(model);
+                }
+
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Missing information, fill in all fields");
+                return View(model);
+            }
+
 
         }
 
