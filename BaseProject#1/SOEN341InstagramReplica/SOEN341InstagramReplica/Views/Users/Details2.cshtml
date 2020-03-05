@@ -5,24 +5,49 @@
     ViewBag.Title = "Details2";
 }
 <script>
+    function followOrUnfollow() {
+        alert('o');
+        alert(document.getElementById('followOrUnfollowButton').value);
+        if (document.getElementById('followOrUnfollowButton').value == "Follow") {
 
+            //Following, which means now they want to unfollow
+            $.post('@Url.Action("FollowOrUnfollowUser", "Users")',
+                { "newFollowStatus": 1, "loggedInUser": @Session["id"], "userProfile": @Model.user.ID}).done
+                (function () {
+                    document.getElementById('followOrUnfollowButton').value = "Unfollow";
+                });
+        } else
+        {
+            //Not following, which means now they want to follow
+            $.post('@Url.Action("FollowOrUnfollowUser", "Users")',
+                { "newFollowStatus": 0, "loggedInUser": @Session["id"], "userProfile": @Model.user.ID}).done
+                (function () {
+                    document.getElementById('followOrUnfollowButton').value = "Follow";
+                });
+        }
+
+    }
 
 </script>
-<h2>Details2User</h2>
+<h2>@Model.user.Username</h2>
+
 @if (Session["username"] != null && Session["username"].ToString() != Model.user.Username)
 {
-    <p>Placeholder for following</p>
-
+  <input type="button" id="followOrUnfollowButton"
+     value="@Model.following.ToString()" class="btn btn-default" onclick="followOrUnfollow()" />
 }
 
-<p>@Model.user.Username</p>
 <p></p>
 @if (Session["username"] != null && Session["username"].ToString() == Model.user.Username)
 {
-<p>@Html.ActionLink("Delete my account", "Delete", new { id = Model.user.ID })</p>
+    <p>@Html.ActionLink("Delete my account", "Delete", new { id = Model.user.ID })</p>
 
+
+    <p></p>
+    <p>
+        @Html.ActionLink("Create New Post", "Create", "UserPosts")
+    </p>
 }
-<p></p>
 <p>MyPosts</p>
 <table class="table">
     <tr>
@@ -36,16 +61,23 @@
     </tr>
     @foreach (var post in Model.posts)
     {
-    <tr>
-        <td>@Html.ActionLink(post.Title, "Details2", "UserPosts", new { id = post.ID }, null)</td>
-        <td>@post.POST</td>
-        @if (Session["username"] != null && Session["username"].ToString() == Model.user.Username)
-        {
+        <tr>
+            <td>@Html.ActionLink(post.Title, "Details2", "UserPosts", new { id = post.ID }, null)</td>
             <td>
-                @Html.ActionLink("Edit", "Edit", "UserPosts", new { id = post.ID }, null) |
-                @Html.ActionLink("Delete", "Delete", "UserPosts", new { id = post.ID }, null)
+                @{
+                    var base64 = Convert.ToBase64String(post.POST);
+                    var imgsrc = string.Format("data:image/png;base64,{0}", base64);
+                }
+
+                <img src='@imgsrc' style="max-width:50px;max-height:50px" />
             </td>
-        }
-    </tr>
+            @if (Session["username"] != null && Session["username"].ToString() == Model.user.Username)
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "UserPosts", new { id = post.ID }, null) |
+                    @Html.ActionLink("Delete", "Delete", "UserPosts", new { id = post.ID }, null)
+                </td>
+            }
+        </tr>
     }
 </table>

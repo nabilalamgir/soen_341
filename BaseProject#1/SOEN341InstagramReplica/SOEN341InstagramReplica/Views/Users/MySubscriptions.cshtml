@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SOEN341InstagramReplica.Models.SubNamesAndLatestPost>
+@{
+    ViewBag.Title = "MySubscriptions";
+}
+
+<h2>MySubscriptions</h2>
+<table class="table">
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Latest Post
+        </th>
+        <th>
+            Link to Post
+        </th>
+    </tr>
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.ActionLink(item.subUsername, "Details2", "Users", new { id = item.subID }, null)
+        </td>
+        @if (item.latestPost != null)
+        {
+            <td>
+
+
+                @{var base64 = Convert.ToBase64String(item.latestPost.POST);
+                    var imgsrc = string.Format("data:image/png;base64,{0}", base64);
+
+
+                <img src='@imgsrc' style="max-width:50px;max-height:50px" />
+                    }
+
+            </td>
+            <td>
+                @Html.ActionLink("View Post", "Details2", "UserPosts", new { id = item.latestPost.ID }, null)
+            </td>
+        }
+        else
+        {
+                        <td>
+                            No Post
+                        </td>
+                        <td>
+                            No Post
+                        </td>
+        }
+    </tr>
+    }
+</table>

@@ -7,8 +7,7 @@ CREATE TABLE [dbo].[Users] (
 	[Email]			VARCHAR (100)		NOT NULL UNIQUE,
     [Age]			INT					NULL,
     [DOB]			DATE				NULL, /* Date of birth */
-	[Date_Joined]	DATE DEFAULT GETDATE(),
-	[Role]			VARCHAR (100)		NOT NULL
+	[Date_Joined]	DATE DEFAULT GETDATE()
 );
 
 CREATE TABLE [dbo].[UserPosts](
@@ -32,6 +31,7 @@ CREATE TABLE [dbo].[Comments](
 	[Comment]		VARCHAR(100) NOT NULL,
 	[Date_Posted]	DATETIME DEFAULT GETDATE(),
 	[User_ID]		INT NOT NULL,
+    [Username]    VARCHAR (100) NOT NULL,
 	[Post_ID]		INT NOT NULL,
 	FOREIGN KEY (User_ID) REFERENCES [dbo].[Users], /* this will be deleted by the trigger */
 	FOREIGN KEY (Post_ID) REFERENCES [dbo].[UserPosts] ON DELETE CASCADE

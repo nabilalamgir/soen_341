@@ -44,22 +44,16 @@ namespace SOEN341InstagramReplica.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             UserPost userPost = db.UserPosts.Find(id);
+            PostAndComments postAndComments = new PostAndComments();
+            postAndComments.post = userPost;
+            postAndComments.comments = (from x in db.Comments where x.Post_ID == userPost.ID select x).ToList();
+            User user = db.Users.Find(userPost.User_ID);
+            postAndComments.postUserName = user.Username.ToString();
             if (userPost == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.userPost = userPost;
-            ViewBag.comments = (List<Comment>)(from x in db.Comments where x.Post_ID == userPost.ID select x).ToList();
-            //ViewData["userPost"] = userPost.Title;
-            //ViewData["comments"] = (from x in db.Comments where x.Post_ID == userPost.ID select x).ToList();
-            //UserPostsAndComments xmodel = new UserPostsAndComments();
-            //xmodel.currentUserPost = userPost;
-            //xmodel.currentUserPostComments = (List<Comment>) (from x in db.Comments where x.Post_ID == userPost.ID select x);
-
-            //return View(xmodel);
-
-            ////////////////
-            return View();
+            return View(postAndComments);
         }
 
         // GET: UserPosts/Create
@@ -77,18 +71,22 @@ namespace SOEN341InstagramReplica.Controllers
         public ActionResult Create([Bind(Include = "ID,Title,Description,POST,Rating,Date_Posted,User_ID")] UserPost userPost, HttpPostedFileBase image)
         {
             userPost.User_ID = (int) Session["id"];
-            if (ModelState.IsValid)
+            userPost.Rating = 0;
+            if (ModelState.IsValid && image != null && 
+                (image.ContentType == "image/png" || image.ContentType == "image/jpeg"))
             {
+
                 if (image != null)
                 {
                     userPost.POST = new byte[image.ContentLength];
                     image.InputStream.Read(userPost.POST, 0, image.ContentLength);
                 }
+                userPost.Date_Posted = DateTime.Now;
                 db.UserPosts.Add(userPost);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details2", "Users", new { id = Session["id"]});
             }
-
+            ModelState.AddModelError("POST", "PNG or JPEG");
             ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", userPost.User_ID);
             return View(userPost);
         }
@@ -116,10 +114,16 @@ namespace SOEN341InstagramReplica.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Title,Description,POST,Rating,Date_Posted,User_ID")] UserPost userPost, HttpPostedFileBase image)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
                 if (image != null)
                 {
+                    if (image.ContentType != "image/png" || image.ContentType != "image/jpeg")
+                    {
+                        ModelState.AddModelError("POST", "PNG or JPEG");
+                        ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", userPost.User_ID);
+                        return View(userPost);
+                    }
                     userPost.POST = new byte[image.ContentLength];
                     image.InputStream.Read(userPost.POST, 0, image.ContentLength);
                 }
@@ -166,7 +170,7 @@ namespace SOEN341InstagramReplica.Controllers
             UserPost userPost = db.UserPosts.Find(id);
             db.UserPosts.Remove(userPost);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details2", "Users", new { id = userPost.User_ID});
         }
 
         protected override void Dispose(bool disposing)

@@ -56,10 +56,11 @@ namespace SOEN341InstagramReplica.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Comment1,User_ID,Post_ID")] Comment comment)
+        public ActionResult Create([Bind(Include = "ID,Comment1,User_ID,Username,Post_ID")] Comment comment)
         {
             comment.User_ID = (int) Session["id"];
             comment.Post_ID = (int)Session["currentPost"];
+            comment.Username = Session["username"].ToString();
             if (ModelState.IsValid)
             {
                 db.Comments.Add(comment);
@@ -105,12 +106,12 @@ namespace SOEN341InstagramReplica.Controllers
         }
 
         // GET: Comments/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             Comment comment = db.Comments.Find(id);
             if (comment == null)
             {
@@ -125,9 +126,10 @@ namespace SOEN341InstagramReplica.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Comment comment = db.Comments.Find(id);
+            int postId = comment.Post_ID;
             db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details2", "UserPosts", new { id = postId});
         }
 
         protected override void Dispose(bool disposing)

@@ -32,7 +32,6 @@ namespace SOEN341InstagramReplica.Models
         public Nullable<int> Age { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<System.DateTime> Date_Joined { get; set; }
-        public string Role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }

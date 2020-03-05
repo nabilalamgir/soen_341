@@ -18,6 +18,7 @@ namespace SOEN341InstagramReplica.Models
         public string Comment1 { get; set; }
         public Nullable<System.DateTime> Date_Posted { get; set; }
         public int User_ID { get; set; }
+        public string Username { get; set; }
         public int Post_ID { get; set; }
     
         public virtual UserPost UserPost { get; set; }

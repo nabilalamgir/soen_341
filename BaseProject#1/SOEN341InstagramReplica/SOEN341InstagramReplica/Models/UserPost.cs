@@ -11,6 +11,7 @@ namespace SOEN341InstagramReplica.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class UserPost
     {
@@ -21,7 +22,9 @@ namespace SOEN341InstagramReplica.Models
         }
     
         public int ID { get; set; }
+        [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
+        [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
         public byte[] POST { get; set; }
         public Nullable<int> Rating { get; set; }

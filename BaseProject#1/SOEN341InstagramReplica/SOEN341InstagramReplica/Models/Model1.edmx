@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SOEN341Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SOEN341Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Comments">
           <Key>
             <PropertyRef Name="ID" />
@@ -13,6 +13,7 @@
           <Property Name="Comment" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Date_Posted" Type="datetime" />
           <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Post_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FollowList">
@@ -30,7 +31,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="POST" Type="varbinary(max)" Nullable="false" />
+          <Property Name="POST" Type="varbinary(max)" />
           <Property Name="Rating" Type="int" />
           <Property Name="Date_Posted" Type="datetime" />
           <Property Name="User_ID" Type="int" Nullable="false" />
@@ -48,9 +49,8 @@
           <Property Name="Age" Type="int" />
           <Property Name="DOB" Type="date" />
           <Property Name="Date_Joined" Type="date" />
-          <Property Name="Role" Type="varchar" MaxLength="100" />
         </EntityType>
-        <Association Name="FK__Comments__Post_I__17F790F9">
+        <Association Name="FK__Comments__Post_I__5EBF139D">
           <End Role="UserPosts" Type="Self.UserPosts" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -64,7 +64,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comments__User_I__01142BA1">
+        <Association Name="FK__Comments__User_I__5DCAEF64">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -76,7 +76,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FollowLis__Follo__04E4BC85">
+        <Association Name="FK__FollowLis__Follo__2E1BDC42">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="FollowList" Type="Self.FollowList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -88,7 +88,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FollowLis__Follo__05D8E0BE">
+        <Association Name="FK__FollowLis__Follo__2F10007B">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="FollowList" Type="Self.FollowList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -100,7 +100,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserPosts__User___18EBB532">
+        <Association Name="FK__UserPosts__User___2B3F6F97">
           <End Role="Users" Type="Self.Users" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -119,28 +119,29 @@
           <EntitySet Name="FollowList" EntityType="Self.FollowList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPosts" EntityType="Self.UserPosts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Comments__Post_I__17F790F9" Association="Self.FK__Comments__Post_I__17F790F9">
+          <AssociationSet Name="FK__Comments__Post_I__5EBF139D" Association="Self.FK__Comments__Post_I__5EBF139D">
             <End Role="UserPosts" EntitySet="UserPosts" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comments__User_I__01142BA1" Association="Self.FK__Comments__User_I__01142BA1">
+          <AssociationSet Name="FK__Comments__User_I__5DCAEF64" Association="Self.FK__Comments__User_I__5DCAEF64">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__FollowLis__Follo__04E4BC85" Association="Self.FK__FollowLis__Follo__04E4BC85">
+          <AssociationSet Name="FK__FollowLis__Follo__2E1BDC42" Association="Self.FK__FollowLis__Follo__2E1BDC42">
             <End Role="Users" EntitySet="Users" />
             <End Role="FollowList" EntitySet="FollowList" />
           </AssociationSet>
-          <AssociationSet Name="FK__FollowLis__Follo__05D8E0BE" Association="Self.FK__FollowLis__Follo__05D8E0BE">
+          <AssociationSet Name="FK__FollowLis__Follo__2F10007B" Association="Self.FK__FollowLis__Follo__2F10007B">
             <End Role="Users" EntitySet="Users" />
             <End Role="FollowList" EntitySet="FollowList" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserPosts__User___18EBB532" Association="Self.FK__UserPosts__User___18EBB532">
+          <AssociationSet Name="FK__UserPosts__User___2B3F6F97" Association="Self.FK__UserPosts__User___2B3F6F97">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserPosts" EntitySet="UserPosts" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SOEN341Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -152,9 +153,10 @@
           <Property Name="Comment1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Date_Posted" Type="DateTime" Precision="3" />
           <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Post_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserPost" Relationship="Self.FK__Comments__Post_I__2F10007B" FromRole="Comments" ToRole="UserPosts" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Comments__User_I__2E1BDC42" FromRole="Comments" ToRole="Users" />
+          <NavigationProperty Name="UserPost" Relationship="Self.FK__Comments__Post_I__5EBF139D" FromRole="Comments" ToRole="UserPosts" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Comments__User_I__5DCAEF64" FromRole="Comments" ToRole="Users" />
         </EntityType>
         <EntityType Name="FollowList">
           <Key>
@@ -163,8 +165,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FolloweeID" Type="Int32" Nullable="false" />
           <Property Name="FollowerID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="Self.FK__FollowLis__Follo__31EC6D26" FromRole="FollowList" ToRole="Users" />
-          <NavigationProperty Name="User1" Relationship="Self.FK__FollowLis__Follo__32E0915F" FromRole="FollowList" ToRole="Users" />
+          <NavigationProperty Name="User" Relationship="Self.FK__FollowLis__Follo__2E1BDC42" FromRole="FollowList" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__FollowLis__Follo__2F10007B" FromRole="FollowList" ToRole="Users" />
         </EntityType>
         <EntityType Name="UserPost">
           <Key>
@@ -173,12 +175,12 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="POST" Type="Binary" FixedLength="false" MaxLength="Max" Nullable="false" />
+          <Property Name="POST" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Rating" Type="Int32" />
           <Property Name="Date_Posted" Type="DateTime" Precision="3" />
           <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__Post_I__2F10007B" FromRole="UserPosts" ToRole="Comments" />
-          <NavigationProperty Name="User" Relationship="Self.FK__UserPosts__User___2A4B4B5E" FromRole="UserPosts" ToRole="Users" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__Post_I__5EBF139D" FromRole="UserPosts" ToRole="Comments" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UserPosts__User___2B3F6F97" FromRole="UserPosts" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -193,13 +195,12 @@
           <Property Name="Age" Type="Int32" />
           <Property Name="DOB" Type="DateTime" Precision="0" />
           <Property Name="Date_Joined" Type="DateTime" Precision="0" />
-          <Property Name="Role" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__User_I__2E1BDC42" FromRole="Users" ToRole="Comments" />
-          <NavigationProperty Name="FollowLists" Relationship="Self.FK__FollowLis__Follo__31EC6D26" FromRole="Users" ToRole="FollowList" />
-          <NavigationProperty Name="FollowLists1" Relationship="Self.FK__FollowLis__Follo__32E0915F" FromRole="Users" ToRole="FollowList" />
-          <NavigationProperty Name="UserPosts" Relationship="Self.FK__UserPosts__User___2A4B4B5E" FromRole="Users" ToRole="UserPosts" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__User_I__5DCAEF64" FromRole="Users" ToRole="Comments" />
+          <NavigationProperty Name="FollowLists" Relationship="Self.FK__FollowLis__Follo__2E1BDC42" FromRole="Users" ToRole="FollowList" />
+          <NavigationProperty Name="FollowLists1" Relationship="Self.FK__FollowLis__Follo__2F10007B" FromRole="Users" ToRole="FollowList" />
+          <NavigationProperty Name="UserPosts" Relationship="Self.FK__UserPosts__User___2B3F6F97" FromRole="Users" ToRole="UserPosts" />
         </EntityType>
-        <Association Name="FK__Comments__Post_I__2F10007B">
+        <Association Name="FK__Comments__Post_I__5EBF139D">
           <End Role="UserPosts" Type="Self.UserPost" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -213,7 +214,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comments__User_I__2E1BDC42">
+        <Association Name="FK__Comments__User_I__5DCAEF64">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -225,7 +226,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FollowLis__Follo__31EC6D26">
+        <Association Name="FK__FollowLis__Follo__2E1BDC42">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="FollowList" Type="Self.FollowList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -237,7 +238,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FollowLis__Follo__32E0915F">
+        <Association Name="FK__FollowLis__Follo__2F10007B">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="FollowList" Type="Self.FollowList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -249,7 +250,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserPosts__User___2A4B4B5E">
+        <Association Name="FK__UserPosts__User___2B3F6F97">
           <End Role="Users" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -268,23 +269,23 @@
           <EntitySet Name="FollowLists" EntityType="Self.FollowList" />
           <EntitySet Name="UserPosts" EntityType="Self.UserPost" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK__Comments__Post_I__2F10007B" Association="Self.FK__Comments__Post_I__2F10007B">
+          <AssociationSet Name="FK__Comments__Post_I__5EBF139D" Association="Self.FK__Comments__Post_I__5EBF139D">
             <End Role="UserPosts" EntitySet="UserPosts" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comments__User_I__2E1BDC42" Association="Self.FK__Comments__User_I__2E1BDC42">
+          <AssociationSet Name="FK__Comments__User_I__5DCAEF64" Association="Self.FK__Comments__User_I__5DCAEF64">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__FollowLis__Follo__31EC6D26" Association="Self.FK__FollowLis__Follo__31EC6D26">
+          <AssociationSet Name="FK__FollowLis__Follo__2E1BDC42" Association="Self.FK__FollowLis__Follo__2E1BDC42">
             <End Role="Users" EntitySet="Users" />
             <End Role="FollowList" EntitySet="FollowLists" />
           </AssociationSet>
-          <AssociationSet Name="FK__FollowLis__Follo__32E0915F" Association="Self.FK__FollowLis__Follo__32E0915F">
+          <AssociationSet Name="FK__FollowLis__Follo__2F10007B" Association="Self.FK__FollowLis__Follo__2F10007B">
             <End Role="Users" EntitySet="Users" />
             <End Role="FollowList" EntitySet="FollowLists" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserPosts__User___2A4B4B5E" Association="Self.FK__UserPosts__User___2A4B4B5E">
+          <AssociationSet Name="FK__UserPosts__User___2B3F6F97" Association="Self.FK__UserPosts__User___2B3F6F97">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserPosts" EntitySet="UserPosts" />
           </AssociationSet>
@@ -302,6 +303,7 @@
                 <ScalarProperty Name="Comment1" ColumnName="Comment" />
                 <ScalarProperty Name="Date_Posted" ColumnName="Date_Posted" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Post_ID" ColumnName="Post_ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -340,7 +342,6 @@
                 <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Date_Joined" ColumnName="Date_Joined" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

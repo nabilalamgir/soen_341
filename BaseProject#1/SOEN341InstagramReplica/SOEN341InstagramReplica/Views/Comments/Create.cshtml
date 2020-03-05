@@ -31,7 +31,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Details2" , "UserPosts", new { id = Session["currentPost"] }, null)
 </div>
 
 @section Scripts {

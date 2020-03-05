@@ -1,31 +1,56 @@
 ﻿@using SOEN341InstagramReplica.Models
-
+@model PostAndComments
 @{
     ViewBag.Title = "Details2";
 }
 
 <h2>Post</h2>
-<h1>@ViewBag.userPost.Title</h1>
-<h1>@Html.ActionLink("UserNamePlaceHolder", "Details", "Users", new { id = ViewBag.userPost.User_ID }, null)</h1>
+<h1>Title: @Model.post.Title</h1>
+<h1>User: @Html.ActionLink(Model.postUserName.ToString(), "Details2", "Users", new { id = Model.post.User_ID }, null)</h1>
+
+@{
+    var base64 = Convert.ToBase64String(Model.post.POST);
+    var imgsrc = string.Format("data:image/png;base64,{0}", base64);
+}
+
+
+<img src='@imgsrc' style="max-width:75%;max-height:75%" />
 <p>-----</p>
+@if (Session["username"] != null)
+{
+    @Html.ActionLink("Create New Comment", "Create", "Comments", new { id = Model.post.ID }, null)
 
-@Html.ActionLink("Create New Comment", "Create", "Comments",  new { id = ViewBag.userPost.ID }, null)
-
-
+}
 
 <table class="table">
-        <tr>
-            <th>
-                Comment
-            </th>
-            <th>
-                User
-            </th>
-        </tr>
-        @foreach (var comment in ViewBag.Comments) { 
     <tr>
-        <td>@comment.Comment1</td>
-        <td>@comment.User_ID</td>
-        </tr>
+        <th>
+            Comment
+        </th>
+        <th>
+            User
+        </th>
+    </tr>
+    @foreach (var comment in Model.comments)
+    {
+    <tr>
+
+        @if (comment.Username == Session["username"].ToString())
+        {
+            <td>@comment.Comment1 | @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.ID, postId = Model.post.ID }, null)</td>
         }
+        else
+        {
+            <td>
+                @comment.Comment1
+            </td>
+            }
+        <td>
+            <a href="@Url.Action("Details2", "Users", new { id = comment.User_ID}, null)">
+                @comment.Username
+            </a>
+        </td>
+
+    </tr>
+    }
 </table>

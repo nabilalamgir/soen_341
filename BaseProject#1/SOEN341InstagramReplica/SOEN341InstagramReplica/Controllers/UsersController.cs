@@ -63,16 +63,19 @@ namespace SOEN341InstagramReplica.Controllers
             else
             {
                 int sessionID = (int) Session["id"];
-                //string following = db.FollowLists.Where(x => (x.FolloweeID == id) && (x.FollowerID == sessionID)).Select(x => x.ID).FirstOrDefault().ToString() ?? "Invalid";
-                if ((db.FollowLists.Where(x => (x.FolloweeID == id) && (x.FollowerID == sessionID)).Select(x => x.ID).FirstOrDefault().ToString() ?? "Invalid") != "Invalid")
+                //int followingint = db.FollowLists.Where(x => (x.FolloweeID == id) && (x.FollowerID == sessionID)).Select(x => x.ID);
+
+                if ((db.FollowLists.Where(x => (x.FolloweeID == id) && (x.FollowerID == sessionID)).Select(x => x.ID)).FirstOrDefault() != 0)
                 {
-                    //There is a following between current user and profile of the user they are o
-                    user.following = "following";
+                    //There is a following between current user and profile of the user they are on,
+                    //meaning they should get the option to unfollow
+                    user.following = "Unfollow";
                 }
                 else
                 {
-                    //They are not following the user profile they are currently on
-                    user.following = "unfollowing";
+                    //They are not following the user profile they are currently on.
+                    //meaning they should get the option to follow
+                    user.following = "Follow";
                 }
             }
 
@@ -158,9 +161,10 @@ namespace SOEN341InstagramReplica.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
+            int userId = id;
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         protected override void Dispose(bool disposing)
@@ -170,6 +174,50 @@ namespace SOEN341InstagramReplica.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult MySubscriptions(int id)
+        {
+            List<SubNamesAndLatestPost> list = new List<SubNamesAndLatestPost>();
+            List<FollowList> subscriptions = (db.FollowLists.Where(x => x.FollowerID == id)).ToList();
+            foreach(FollowList x in subscriptions)
+            {
+                int followeeId = x.FolloweeID;
+                SubNamesAndLatestPost z = new SubNamesAndLatestPost();
+                if ((db.UserPosts.Where(y => y.User_ID == followeeId).Count()) != 0)
+                {
+                    UserPost latestPost = db.UserPosts.Where(y => y.User_ID == followeeId).OrderByDescending(y => y.Date_Posted).First();
+                    z.latestPost = latestPost;
+                }
+                
+                z.subID = followeeId;
+                User user = db.Users.Find(followeeId);
+                z.subUsername = user.Username.ToString();
+                list.Add(z);
+            }
+            return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult FollowOrUnfollowUser(int newFollowStatus, int loggedInUser, int userProfile)
+        {
+            //They clicked that they want to follow
+            if(newFollowStatus == 1)
+            {
+                FollowList newEntry = new FollowList();
+                newEntry.FollowerID = loggedInUser;
+                newEntry.FolloweeID = userProfile;
+                db.FollowLists.Add(newEntry);
+                db.SaveChanges();
+            }
+            else //They want to unfollow
+            {
+                int id = (db.FollowLists.Where(x => (x.FolloweeID == userProfile) && (x.FollowerID == loggedInUser)).Select(x => x.ID)).FirstOrDefault();
+                db.FollowLists.Remove(db.FollowLists.Find(id));
+                db.SaveChanges();
+            }
+            UserAndPosts user = new UserAndPosts();
+            user.following = "unfollowing";
+            return Json(new { user, Status = "Ok", Error = "" });
         }
     }
 }
