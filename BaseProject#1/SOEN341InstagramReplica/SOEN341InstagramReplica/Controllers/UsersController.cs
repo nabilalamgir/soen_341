@@ -174,6 +174,27 @@ namespace SOEN341InstagramReplica.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult MySubscriptions(int id)
+        {
+            List<SubNamesAndLatestPost> list = new List<SubNamesAndLatestPost>();
+            List<FollowList> subscriptions = (db.FollowLists.Where(x => x.FollowerID == id)).ToList();
+            foreach(FollowList x in subscriptions)
+            {
+                int followeeId = x.FolloweeID;
+                SubNamesAndLatestPost z = new SubNamesAndLatestPost();
+                if ((db.UserPosts.Where(y => y.User_ID == followeeId).Count()) != 0)
+                {
+                    UserPost latestPost = db.UserPosts.Where(y => y.User_ID == followeeId).OrderByDescending(y => y.Date_Posted).First();
+                    z.latestPost = latestPost;
+                }
+                
+                z.subID = followeeId;
+                User user = db.Users.Find(followeeId);
+                z.subUsername = user.Username.ToString();
+                list.Add(z);
+            }
+            return View(list);
+        }
 
         [HttpPost]
         public ActionResult FollowOrUnfollowUser(int newFollowStatus, int loggedInUser, int userProfile)

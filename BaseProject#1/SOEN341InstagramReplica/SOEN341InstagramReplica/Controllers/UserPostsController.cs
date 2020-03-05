@@ -71,6 +71,7 @@ namespace SOEN341InstagramReplica.Controllers
         public ActionResult Create([Bind(Include = "ID,Title,Description,POST,Rating,Date_Posted,User_ID")] UserPost userPost, HttpPostedFileBase image)
         {
             userPost.User_ID = (int) Session["id"];
+            userPost.Rating = 0;
             if (ModelState.IsValid && image != null && 
                 (image.ContentType == "image/png" || image.ContentType == "image/jpeg"))
             {

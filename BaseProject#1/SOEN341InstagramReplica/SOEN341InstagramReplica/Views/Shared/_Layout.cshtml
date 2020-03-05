@@ -37,14 +37,19 @@
                             </a>
                         </li>
                         <li>
+                            <a href="@Url.Action("MySubscriptions", "Users", new { id = Session["id"]}, null)">
+                                MySubscriptions
+                            </a>
+                        </li>
+                        <li>
                             <a href="@Url.Action("SignOut", "Home")">Sign Out</a>
                         </li>
 
                     }
                     else/*This means that no one is logged in
-                                    Meaning the user will have the option to either sign up and create
-                                    an account or login to an existing one
-                                    */
+                                            Meaning the user will have the option to either sign up and create
+                                            an account or login to an existing one
+                                            */
                     {
                         <li>
                             <a href="@Url.Action("SignUp", "Home")">Sign Up</a>
