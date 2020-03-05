@@ -164,6 +164,7 @@ namespace SOEN341InstagramReplica.Controllers
             int userId = id;
             db.Users.Remove(user);
             db.SaveChanges();
+            Session.RemoveAll();
             return RedirectToAction("Index", "Home");
         }
 
