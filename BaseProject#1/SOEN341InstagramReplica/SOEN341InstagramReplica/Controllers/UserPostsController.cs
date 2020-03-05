@@ -71,19 +71,21 @@ namespace SOEN341InstagramReplica.Controllers
         public ActionResult Create([Bind(Include = "ID,Title,Description,POST,Rating,Date_Posted,User_ID")] UserPost userPost, HttpPostedFileBase image)
         {
             userPost.User_ID = (int) Session["id"];
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && image != null && 
+                (image.ContentType == "image/png" || image.ContentType == "image/jpeg"))
             {
+
                 if (image != null)
                 {
                     userPost.POST = new byte[image.ContentLength];
                     image.InputStream.Read(userPost.POST, 0, image.ContentLength);
                 }
-                userPost.Date_Posted = new DateTime();
+                userPost.Date_Posted = DateTime.Now;
                 db.UserPosts.Add(userPost);
                 db.SaveChanges();
                 return RedirectToAction("Details2", "Users", new { id = Session["id"]});
             }
-
+            ModelState.AddModelError("POST", "PNG or JPEG");
             ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", userPost.User_ID);
             return View(userPost);
         }
