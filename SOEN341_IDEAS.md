@@ -4,16 +4,15 @@ certain tasks may be different in difficutly.
 # Features
 
 Core
-- Posting a picture/video (with text description) (easy)
+- Posting a picture (with text description) (easy)
 - Following a user (easy)
 - Leave comments/ratings on a post (easy)
 
-Extra features to present
-- Creating albums (easy)
-	- Saving another user’s post in specialised album (easy)
-	- Filtering which user’s can view profile/albums (easy)
-- Scheduled Posts (easy)
-- Trending posts (easy-medium)
+Extra features to present as ideas
+- Creating albums
+	- Saving another user’s post in specialised album
+	- Filtering which user’s can view profile/albums
+- Trending posts
 
 Features if time allows
 - Linked Accounts (easy)
