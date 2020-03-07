@@ -15,6 +15,8 @@ CREATE TABLE [dbo].[UserPosts](
 	[Title]			VARCHAR (100)		NOT NULL,
 	[Description]	VARCHAR(100)		NOT NULL,
 	[POST]			varbinary (max)		NOT NULL,
+	[Likes]		  INT			  DEFAULT ((0)) NULL,
+	[Dislikes]	  INT			  DEFAULT ((0)) NULL,
 	[Rating]		INT DEFAULT 0,
 	[Date_Posted]	DATETIME DEFAULT GETDATE(),
 	[User_ID]		INT NOT NULL,

@@ -27,6 +27,8 @@ namespace SOEN341InstagramReplica.Models
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
         public byte[] POST { get; set; }
+        public Nullable<int> Likes { get; set; }
+        public Nullable<int> Dislikes { get; set; }
         public Nullable<int> Rating { get; set; }
         public Nullable<System.DateTime> Date_Posted { get; set; }
         public int User_ID { get; set; }
