@@ -112,36 +112,17 @@ namespace SOEN341InstagramReplica.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,POST,Rating,Date_Posted,User_ID")] UserPost userPost, HttpPostedFileBase image)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description")] UserPost userPost, HttpPostedFileBase image)
         {
-            if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                if (image != null)
-                {
-                    if (image.ContentType != "image/png" || image.ContentType != "image/jpeg")
-                    {
-                        ModelState.AddModelError("POST", "PNG or JPEG");
-                        ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", userPost.User_ID);
-                        return View(userPost);
-                    }
-                    userPost.POST = new byte[image.ContentLength];
-                    image.InputStream.Read(userPost.POST, 0, image.ContentLength);
-                }
-                if (image == null)
-                {
-                    HttpPostedFileBase file = Request.Files["imgsrc"];
-                    if (file != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("NOT Null");
-                        userPost.POST = new byte[file.ContentLength];
-                        file.InputStream.Read(userPost.POST, 0, file.ContentLength);
-                    }
-                    System.Diagnostics.Debug.WriteLine("NULL");
-                }
-                db.Entry(userPost).State = EntityState.Modified;
+                UserPost newUserPostDetails = db.UserPosts.Find(userPost.ID);
+                newUserPostDetails.Title = userPost.Title;
+                newUserPostDetails.Description = userPost.Description;
+                db.Entry(newUserPostDetails).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
-                
             }
             ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", userPost.User_ID);
             return View(userPost);
@@ -183,3 +164,30 @@ namespace SOEN341InstagramReplica.Controllers
         }
     }
 }
+
+/*CODE BEING KEPT IN CASE
+ WILL DELETE BEFORE END OF PROJECT
+
+                //if (image != null)
+                //{
+                //    userPost.POST = new byte[image.ContentLength];
+                //    image.InputStream.Read(userPost.POST, 0, image.ContentLength);
+                //}
+                //if (image == null)
+                //{
+                //    HttpPostedFileBase file = Request.Files["imgsrc"];
+                //    if (file != null)
+                //    {
+                //        System.Diagnostics.Debug.WriteLine("NOT Null");
+                //        userPost.POST = new byte[file.ContentLength];
+                //        file.InputStream.Read(userPost.POST, 0, file.ContentLength);
+                //    }
+                //    System.Diagnostics.Debug.WriteLine("NULL");
+                //}
+ 
+
+
+
+
+
+*/

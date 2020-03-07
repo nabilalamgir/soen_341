@@ -35,7 +35,7 @@
     {
     <tr>
 
-        @if (comment.Username == Session["username"].ToString())
+        @if (Session["username"] != null && comment.Username == Session["username"].ToString())
         {
             <td>@comment.Comment1 | @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.ID, postId = Model.post.ID }, null)</td>
         }
