@@ -32,6 +32,8 @@
           <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="POST" Type="varbinary(max)" />
+          <Property Name="Likes" Type="int" />
+          <Property Name="Dislikes" Type="int" />
           <Property Name="Rating" Type="int" />
           <Property Name="Date_Posted" Type="datetime" />
           <Property Name="User_ID" Type="int" Nullable="false" />
@@ -176,6 +178,8 @@
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="POST" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Likes" Type="Int32" />
+          <Property Name="Dislikes" Type="Int32" />
           <Property Name="Rating" Type="Int32" />
           <Property Name="Date_Posted" Type="DateTime" Precision="3" />
           <Property Name="User_ID" Type="Int32" Nullable="false" />
@@ -324,6 +328,8 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="POST" ColumnName="POST" />
+                <ScalarProperty Name="Likes" ColumnName="Likes"/>
+                <ScalarProperty Name="Dislikes" ColumnName="Dislikes"/>
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="Date_Posted" ColumnName="Date_Posted" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
