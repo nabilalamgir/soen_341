@@ -49,6 +49,9 @@ namespace SOEN341InstagramReplica.Controllers
             postAndComments.comments = (from x in db.Comments where x.Post_ID == userPost.ID select x).ToList();
             User user = db.Users.Find(userPost.User_ID);
             postAndComments.postUserName = user.Username.ToString();
+
+
+            //int likeStatus = db..Where(x => (x.FolloweeID == id) && (x.FollowerID == sessionID)).Select(x => x.ID)).FirstOrDefault();
             if (userPost == null)
             {
                 return HttpNotFound();
