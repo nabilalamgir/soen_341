@@ -3,7 +3,35 @@
 @{
     ViewBag.Title = "Details2";
 }
+<script>
+    function likeOrDislike(likeStatus) {
+        if (likeStatus == 1) { //They clicked like
+            alert("clicked like= " + likeStatus);
+        } else { //They clicked dislike
+            alert("clicked dislike= " + likeStatus);
+        }
+        //newRatingStatus, int loggedInUser, int postID
 
+        $.post('@Url.Action("LikeOrDislike", "UserPosts")',
+            { "newRatingStatus": likeStatus, "loggedInUser": @Session["id"], "postID": @Model.post.ID}).done
+            (function (data) {
+                var parsed_data = JSON.parse(data);
+                alert("here");
+                alert(data);
+                alert(data.LikeOrDislike);
+
+                });
+
+    }
+
+</script>
+@if (Session["username"] != null && Session["username"].ToString() != Model.postUserName)
+{//LightBlue = style="background-color:#ADD8E6"
+    <input type="button" id="likeButton"
+           value="Like" class="btn btn-default" onclick="likeOrDislike(1)" />
+    <input type="button" id="likeButton"
+           value="Dislike" class="btn btn-default" onclick="likeOrDislike(2)" />
+}
 <h2>Post</h2>
 <h1>Title: @Model.post.Title</h1>
 <h1>User: @Html.ActionLink(Model.postUserName.ToString(), "Details2", "Users", new { id = Model.post.User_ID }, null)</h1>
@@ -33,24 +61,24 @@
     </tr>
     @foreach (var comment in Model.comments)
     {
-    <tr>
+        <tr>
 
-        @if (Session["username"] != null && comment.Username == Session["username"].ToString())
-        {
-            <td>@comment.Comment1 | @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.ID, postId = Model.post.ID }, null)</td>
-        }
-        else
-        {
-            <td>
-                @comment.Comment1
-            </td>
+            @if (Session["username"] != null && comment.Username == Session["username"].ToString())
+            {
+                <td>@comment.Comment1 | @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.ID, postId = Model.post.ID }, null)</td>
             }
-        <td>
-            <a href="@Url.Action("Details2", "Users", new { id = comment.User_ID}, null)">
-                @comment.Username
-            </a>
-        </td>
+            else
+            {
+                <td>
+                    @comment.Comment1
+                </td>
+            }
+            <td>
+                <a href="@Url.Action("Details2", "Users", new { id = comment.User_ID}, null)">
+                    @comment.Username
+                </a>
+            </td>
 
-    </tr>
+        </tr>
     }
 </table>

@@ -13,7 +13,7 @@ namespace SOEN341InstagramReplica.Controllers
     public class UserPostsController : Controller
     {
         private SOEN341Entities db = new SOEN341Entities();
-        
+
         // GET: UserPosts
         public ActionResult Index()
         {
@@ -46,6 +46,7 @@ namespace SOEN341InstagramReplica.Controllers
             UserPost userPost = db.UserPosts.Find(id);
             PostAndComments postAndComments = new PostAndComments();
             postAndComments.post = userPost;
+
             postAndComments.comments = (from x in db.Comments where x.Post_ID == userPost.ID select x).ToList();
             User user = db.Users.Find(userPost.User_ID);
             postAndComments.postUserName = user.Username.ToString();
@@ -73,7 +74,7 @@ namespace SOEN341InstagramReplica.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,Description,POST,Likes,Dislikes,Rating,Date_Posted,User_ID")] UserPost userPost, HttpPostedFileBase image)
         {
-            if (ModelState.IsValid && image != null && 
+            if (ModelState.IsValid && image != null &&
                 (image.ContentType == "image/png" || image.ContentType == "image/jpeg"))
             {
 
@@ -87,7 +88,7 @@ namespace SOEN341InstagramReplica.Controllers
                 userPost.Date_Posted = DateTime.Now;
                 db.UserPosts.Add(userPost);
                 db.SaveChanges();
-                return RedirectToAction("Details2", "Users", new { id = Session["id"]});
+                return RedirectToAction("Details2", "Users", new { id = Session["id"] });
             }
             ModelState.AddModelError("POST", "PNG or JPEG");
             ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", userPost.User_ID);
@@ -154,7 +155,7 @@ namespace SOEN341InstagramReplica.Controllers
             UserPost userPost = db.UserPosts.Find(id);
             db.UserPosts.Remove(userPost);
             db.SaveChanges();
-            return RedirectToAction("Details2", "Users", new { id = userPost.User_ID});
+            return RedirectToAction("Details2", "Users", new { id = userPost.User_ID });
         }
 
         protected override void Dispose(bool disposing)
@@ -165,6 +166,56 @@ namespace SOEN341InstagramReplica.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost]
+        public ActionResult LikeOrDislike(int newRatingStatus, int loggedInUser, int postID)
+        {
+            //try
+            //{
+            //    int rating = (int) db.LikeDislikeLists.Where(x => (x.PostId == postID) && x.UserId == loggedInUser).Select(x => x.LikeOrDislike).FirstOrDefault();
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("doesnt exist?");
+            //}
+
+            //Check if record already exists of user liking or disliking this post
+            LikeDislikeList returnStatus = new LikeDislikeList();
+            if (db.LikeDislikeLists.Where(x => (x.PostId == postID) && x.UserId == loggedInUser).Select(x => x.LikeOrDislike).FirstOrDefault() != 0)
+            {
+                int id = (int)db.LikeDislikeLists.Where(x => (x.PostId == postID) && x.UserId == loggedInUser).Select(x => x.ID).FirstOrDefault();
+
+                LikeDislikeList currentRating = db.LikeDislikeLists.Find(id);
+
+                //User already liked or disliked but wants to cancel
+                if (currentRating.LikeOrDislike == newRatingStatus)
+                {
+                    db.LikeDislikeLists.Remove(currentRating);
+                    db.SaveChanges();
+                    currentRating.LikeOrDislike = 0;
+                }
+                else //They are changing their like status
+                {
+                    currentRating.LikeOrDislike = newRatingStatus;
+                    db.Entry(currentRating).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                returnStatus = currentRating;
+            }
+            else
+            {
+                LikeDislikeList newRating = new LikeDislikeList();
+                newRating.LikeOrDislike = newRatingStatus;
+                newRating.PostId = postID;
+                newRating.UserId = loggedInUser;
+                db.LikeDislikeLists.Add(newRating);
+                db.SaveChanges();
+                returnStatus = newRating;
+            }
+            return Json(new { returnStatus, Status = "Ok", Error = "" });
+        }
+
     }
 }
 
