@@ -32,7 +32,7 @@
 <h2>@Model.user.Username</h2>
 
 @if (Session["username"] != null && Session["username"].ToString() != Model.user.Username)
-{//LightBlue = style="background-color:#ADD8E6"
+{
   <input type="button" id="followOrUnfollowButton"
      value="@Model.following.ToString()" class="btn btn-default" onclick="followOrUnfollow()" />
 }

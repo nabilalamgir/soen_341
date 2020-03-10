@@ -27,7 +27,6 @@ namespace SOEN341InstagramReplica.Models
     
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<FollowList> FollowLists { get; set; }
-        public virtual DbSet<LikeDislikeList> LikeDislikeLists { get; set; }
         public virtual DbSet<UserPost> UserPosts { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

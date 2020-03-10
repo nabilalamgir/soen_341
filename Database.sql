@@ -53,23 +53,6 @@ CREATE TABLE [dbo].[FollowList](
 	FOREIGN KEY (FolloweeID) REFERENCES [dbo].[Users],
 	FOREIGN KEY (FollowerID) REFERENCES [dbo].[Users]
 );
-
-CREATE TABLE [dbo].[LikeDislikeList] (
-    [ID]            INT IDENTITY (1, 1) NOT NULL,
-    [LikeOrDislike] INT DEFAULT ((0)) NOT NULL,
-    [UserId]        INT NOT NULL,
-    [PostId]        INT NOT NULL,
-    PRIMARY KEY CLUSTERED ([ID] ASC),
-    FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([ID]),
-    FOREIGN KEY ([PostId]) REFERENCES [dbo].[UserPosts] ([ID]) ON DELETE CASCADE
-	/*
-	0 - NOTHING
-	1 - LIKE
-	2 - DISLIKE
-	*/
-	
-);
-
 GO
 CREATE   TRIGGER [dbo].[delete_user_associated_content]
 ON [dbo].[Users] INSTEAD OF DELETE

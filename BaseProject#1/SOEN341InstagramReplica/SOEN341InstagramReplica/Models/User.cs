@@ -20,7 +20,6 @@ namespace SOEN341InstagramReplica.Models
             this.Comments = new HashSet<Comment>();
             this.FollowLists = new HashSet<FollowList>();
             this.FollowLists1 = new HashSet<FollowList>();
-            this.LikeDislikeLists = new HashSet<LikeDislikeList>();
             this.UserPosts = new HashSet<UserPost>();
         }
     
@@ -40,8 +39,6 @@ namespace SOEN341InstagramReplica.Models
         public virtual ICollection<FollowList> FollowLists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowList> FollowLists1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LikeDislikeList> LikeDislikeLists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserPost> UserPosts { get; set; }
     }

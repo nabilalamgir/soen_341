@@ -10,6 +10,5 @@ namespace SOEN341InstagramReplica.Models
         public string postUserName { get; set; }
         public UserPost post { get; set; }
         public IEnumerable<Comment> comments { get; set; }
-        public int likeStatus { get; set; }
     }
 }
