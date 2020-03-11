@@ -50,9 +50,20 @@ namespace SOEN341InstagramReplica.Controllers
             postAndComments.comments = (from x in db.Comments where x.Post_ID == userPost.ID select x).ToList();
             User user = db.Users.Find(userPost.User_ID);
             postAndComments.postUserName = user.Username.ToString();
+            if(Session["username"] != null)
+            {
+                int sessionId = (int)Session["id"];
+                if ( db.LikeDislikeLists.Where(x => (x.PostId == userPost.ID) && x.UserId == sessionId).Select(x => x.LikeOrDislike).FirstOrDefault() != 0) {
+                    postAndComments.likeStatus = db.LikeDislikeLists.Where(x => (x.PostId == userPost.ID) && x.UserId == sessionId).Select(x => x.LikeOrDislike).FirstOrDefault();
+                }
+                else
+                {
+                    postAndComments.likeStatus = 0;
+                }
+            }
 
 
-            //int likeStatus = db..Where(x => (x.FolloweeID == id) && (x.FollowerID == sessionID)).Select(x => x.ID)).FirstOrDefault();
+            //int likeStatus = db.Where(x => (x.FolloweeID == id) && (x.FollowerID == sessionID)).Select(x => x.ID)).FirstOrDefault();
             if (userPost == null)
             {
                 return HttpNotFound();
@@ -166,18 +177,11 @@ namespace SOEN341InstagramReplica.Controllers
             }
             base.Dispose(disposing);
         }
-
+        
         [HttpPost]
         public ActionResult LikeOrDislike(int newRatingStatus, int loggedInUser, int postID)
         {
-            //try
-            //{
-            //    int rating = (int) db.LikeDislikeLists.Where(x => (x.PostId == postID) && x.UserId == loggedInUser).Select(x => x.LikeOrDislike).FirstOrDefault();
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine("doesnt exist?");
-            //}
+
 
             //Check if record already exists of user liking or disliking this post
             LikeDislikeList returnStatus = new LikeDislikeList();
@@ -196,9 +200,12 @@ namespace SOEN341InstagramReplica.Controllers
                 }
                 else //They are changing their like status
                 {
+
                     currentRating.LikeOrDislike = newRatingStatus;
                     db.Entry(currentRating).State = EntityState.Modified;
                     db.SaveChanges();
+                    returnStatus = db.LikeDislikeLists.Find(id);
+                    return Json(new { returnStatus, Status = "Ok", Error = "" });
                 }
 
                 returnStatus = currentRating;
