@@ -24,6 +24,15 @@
           <Property Name="FolloweeID" Type="int" Nullable="false" />
           <Property Name="FollowerID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="LikeDislikeList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LikeOrDislike" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserPosts">
           <Key>
             <PropertyRef Name="ID" />
@@ -52,7 +61,7 @@
           <Property Name="DOB" Type="date" />
           <Property Name="Date_Joined" Type="date" />
         </EntityType>
-        <Association Name="FK__Comments__Post_I__5EBF139D">
+        <Association Name="FK__Comments__Post_I__1EA48E88">
           <End Role="UserPosts" Type="Self.UserPosts" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -102,7 +111,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserPosts__User___2B3F6F97">
+        <Association Name="FK__LikeDisli__PostI__1F98B2C1">
+          <End Role="UserPosts" Type="Self.UserPosts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LikeDislikeList" Type="Self.LikeDislikeList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPosts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LikeDislikeList">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LikeDisli__UserI__17036CC0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="LikeDislikeList" Type="Self.LikeDislikeList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LikeDislikeList">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserPosts__User___208CD6FA">
           <End Role="Users" Type="Self.Users" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -119,9 +154,10 @@
         <EntityContainer Name="SOEN341ModelStoreContainer">
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FollowList" EntityType="Self.FollowList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LikeDislikeList" EntityType="Self.LikeDislikeList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPosts" EntityType="Self.UserPosts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Comments__Post_I__5EBF139D" Association="Self.FK__Comments__Post_I__5EBF139D">
+          <AssociationSet Name="FK__Comments__Post_I__1EA48E88" Association="Self.FK__Comments__Post_I__1EA48E88">
             <End Role="UserPosts" EntitySet="UserPosts" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
@@ -137,7 +173,15 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="FollowList" EntitySet="FollowList" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserPosts__User___2B3F6F97" Association="Self.FK__UserPosts__User___2B3F6F97">
+          <AssociationSet Name="FK__LikeDisli__PostI__1F98B2C1" Association="Self.FK__LikeDisli__PostI__1F98B2C1">
+            <End Role="UserPosts" EntitySet="UserPosts" />
+            <End Role="LikeDislikeList" EntitySet="LikeDislikeList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LikeDisli__UserI__17036CC0" Association="Self.FK__LikeDisli__UserI__17036CC0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LikeDislikeList" EntitySet="LikeDislikeList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserPosts__User___208CD6FA" Association="Self.FK__UserPosts__User___208CD6FA">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserPosts" EntitySet="UserPosts" />
           </AssociationSet>
@@ -157,7 +201,7 @@
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Post_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserPost" Relationship="Self.FK__Comments__Post_I__5EBF139D" FromRole="Comments" ToRole="UserPosts" />
+          <NavigationProperty Name="UserPost" Relationship="Self.FK__Comments__Post_I__1EA48E88" FromRole="Comments" ToRole="UserPosts" />
           <NavigationProperty Name="User" Relationship="Self.FK__Comments__User_I__5DCAEF64" FromRole="Comments" ToRole="Users" />
         </EntityType>
         <EntityType Name="FollowList">
@@ -169,6 +213,17 @@
           <Property Name="FollowerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK__FollowLis__Follo__2E1BDC42" FromRole="FollowList" ToRole="Users" />
           <NavigationProperty Name="User1" Relationship="Self.FK__FollowLis__Follo__2F10007B" FromRole="FollowList" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="LikeDislikeList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LikeOrDislike" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserPost" Relationship="Self.FK__LikeDisli__PostI__1F98B2C1" FromRole="LikeDislikeList" ToRole="UserPosts" />
+          <NavigationProperty Name="User" Relationship="Self.FK__LikeDisli__UserI__17036CC0" FromRole="LikeDislikeList" ToRole="Users" />
         </EntityType>
         <EntityType Name="UserPost">
           <Key>
@@ -183,8 +238,9 @@
           <Property Name="Rating" Type="Int32" />
           <Property Name="Date_Posted" Type="DateTime" Precision="3" />
           <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__Post_I__5EBF139D" FromRole="UserPosts" ToRole="Comments" />
-          <NavigationProperty Name="User" Relationship="Self.FK__UserPosts__User___2B3F6F97" FromRole="UserPosts" ToRole="Users" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__Post_I__1EA48E88" FromRole="UserPosts" ToRole="Comments" />
+          <NavigationProperty Name="LikeDislikeLists" Relationship="Self.FK__LikeDisli__PostI__1F98B2C1" FromRole="UserPosts" ToRole="LikeDislikeList" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UserPosts__User___208CD6FA" FromRole="UserPosts" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -202,9 +258,10 @@
           <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__User_I__5DCAEF64" FromRole="Users" ToRole="Comments" />
           <NavigationProperty Name="FollowLists" Relationship="Self.FK__FollowLis__Follo__2E1BDC42" FromRole="Users" ToRole="FollowList" />
           <NavigationProperty Name="FollowLists1" Relationship="Self.FK__FollowLis__Follo__2F10007B" FromRole="Users" ToRole="FollowList" />
-          <NavigationProperty Name="UserPosts" Relationship="Self.FK__UserPosts__User___2B3F6F97" FromRole="Users" ToRole="UserPosts" />
+          <NavigationProperty Name="LikeDislikeLists" Relationship="Self.FK__LikeDisli__UserI__17036CC0" FromRole="Users" ToRole="LikeDislikeList" />
+          <NavigationProperty Name="UserPosts" Relationship="Self.FK__UserPosts__User___208CD6FA" FromRole="Users" ToRole="UserPosts" />
         </EntityType>
-        <Association Name="FK__Comments__Post_I__5EBF139D">
+        <Association Name="FK__Comments__Post_I__1EA48E88">
           <End Role="UserPosts" Type="Self.UserPost" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -254,7 +311,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserPosts__User___2B3F6F97">
+        <Association Name="FK__LikeDisli__PostI__1F98B2C1">
+          <End Role="UserPosts" Type="Self.UserPost" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LikeDislikeList" Type="Self.LikeDislikeList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPosts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LikeDislikeList">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LikeDisli__UserI__17036CC0">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="LikeDislikeList" Type="Self.LikeDislikeList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LikeDislikeList">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserPosts__User___208CD6FA">
           <End Role="Users" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -268,12 +351,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SOEN341Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SOEN341Entities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="FollowLists" EntityType="Self.FollowList" />
+          <EntitySet Name="LikeDislikeLists" EntityType="Self.LikeDislikeList" />
           <EntitySet Name="UserPosts" EntityType="Self.UserPost" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK__Comments__Post_I__5EBF139D" Association="Self.FK__Comments__Post_I__5EBF139D">
+          <AssociationSet Name="FK__Comments__Post_I__1EA48E88" Association="Self.FK__Comments__Post_I__1EA48E88">
             <End Role="UserPosts" EntitySet="UserPosts" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
@@ -289,7 +373,15 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="FollowList" EntitySet="FollowLists" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserPosts__User___2B3F6F97" Association="Self.FK__UserPosts__User___2B3F6F97">
+          <AssociationSet Name="FK__LikeDisli__PostI__1F98B2C1" Association="Self.FK__LikeDisli__PostI__1F98B2C1">
+            <End Role="UserPosts" EntitySet="UserPosts" />
+            <End Role="LikeDislikeList" EntitySet="LikeDislikeLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LikeDisli__UserI__17036CC0" Association="Self.FK__LikeDisli__UserI__17036CC0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LikeDislikeList" EntitySet="LikeDislikeLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserPosts__User___208CD6FA" Association="Self.FK__UserPosts__User___208CD6FA">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserPosts" EntitySet="UserPosts" />
           </AssociationSet>
@@ -299,7 +391,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SOEN341ModelStoreContainer" CdmEntityContainer="SOEN341Entities">
+        <EntityContainerMapping StorageEntityContainer="SOEN341ModelStoreContainer" CdmEntityContainer="SOEN341Entities2">
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="SOEN341Model.Comment">
               <MappingFragment StoreEntitySet="Comments">
@@ -321,6 +413,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LikeDislikeLists">
+            <EntityTypeMapping TypeName="SOEN341Model.LikeDislikeList">
+              <MappingFragment StoreEntitySet="LikeDislikeList">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LikeOrDislike" ColumnName="LikeOrDislike" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserPosts">
             <EntityTypeMapping TypeName="SOEN341Model.UserPost">
               <MappingFragment StoreEntitySet="UserPosts">
@@ -328,8 +430,8 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="POST" ColumnName="POST" />
-                <ScalarProperty Name="Likes" ColumnName="Likes"/>
-                <ScalarProperty Name="Dislikes" ColumnName="Dislikes"/>
+                <ScalarProperty Name="Likes" ColumnName="Likes" />
+                <ScalarProperty Name="Dislikes" ColumnName="Dislikes" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="Date_Posted" ColumnName="Date_Posted" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />

@@ -4,16 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="85f63963e9eb4ca8bac6c35c1fe9c07d" Name="Diagram1">
-        <EntityTypeShape EntityType="SOEN341Model.Comment" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SOEN341Model.FollowList" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SOEN341Model.UserPost" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="SOEN341Model.User" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <AssociationConnector Association="SOEN341Model.FK__Comments__Post_I__5EBF139D" ManuallyRouted="false" />
+      <Diagram DiagramId="ba740d995fff49cfbe0ab7633b0ca0fb" Name="Diagram1">
+        <EntityTypeShape EntityType="SOEN341Model.Comment" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.FollowList" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.LikeDislikeList" Width="1.5" PointX="8.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.UserPost" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.User" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <AssociationConnector Association="SOEN341Model.FK__Comments__Post_I__1EA48E88" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__Comments__User_I__5DCAEF64" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__FollowLis__Follo__2E1BDC42" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__FollowLis__Follo__2F10007B" ManuallyRouted="false" />
-        <AssociationConnector Association="SOEN341Model.FK__UserPosts__User___2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="SOEN341Model.FK__LikeDisli__PostI__1F98B2C1" ManuallyRouted="false" />
+        <AssociationConnector Association="SOEN341Model.FK__LikeDisli__UserI__17036CC0" ManuallyRouted="false" />
+        <AssociationConnector Association="SOEN341Model.FK__UserPosts__User___208CD6FA" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

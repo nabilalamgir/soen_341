@@ -3,7 +3,84 @@
 @{
     ViewBag.Title = "Details2";
 }
+<script>
 
+    window.onload = function () {
+        //alert("onload");
+        if (@Session["id"] != null) {
+            if (@Model.likeStatus == 1) { //There is a record of it being liked
+                document.getElementById("likeButton").style.backgroundColor = "lightblue";
+            } else if (@Model.likeStatus == 2) { //There is a record of it being disliked
+                document.getElementById("dislikeButton").style.backgroundColor = "red";
+            }
+            //#fff default background
+        }
+    }
+
+    //$(window).load(function () {
+        
+    //});
+    function likeOrDislike(likeStatus) {
+            //alert("currently= " + @Model.likeStatus);
+            if (likeStatus == 1) { //They clicked like
+                //alert("clicked like= " + likeStatus);
+            } else { //They clicked dislike
+                //alert("clicked dislike= " + likeStatus);
+            }        
+            $.post('@Url.Action("LikeOrDislike", "UserPosts")',
+            { "newRatingStatus": likeStatus, "loggedInUser": @Session["id"], "postID": @Model.post.ID}).done
+            (function (data, status, error) {
+                //var parsed_data = JSON.parse(data);
+                //alert(status);
+                //alert("here");
+                //alert(data.returnStatus.LikeOrDislike);
+
+            }).fail(function (data) {
+                //Not sure why but for some reason switching between like and dislike returns error
+                //alert("Fail for some reason");
+            });
+
+        /**********
+         * COLOR CHANGE CODE
+         ********/
+        if ((likeStatus == 1 && document.getElementById("dislikeButton").style.backgroundColor == "red")
+            || (likeStatus == 2 && document.getElementById("likeButton").style.backgroundColor == "lightblue")) {
+
+            if (likeStatus == 1) { //They clicked like
+                document.getElementById("likeButton").style.backgroundColor = "lightblue";
+                document.getElementById("dislikeButton").style.backgroundColor = "#fff";
+            } else { //They clicked dislike
+                document.getElementById("likeButton").style.backgroundColor = "#fff";
+                document.getElementById("dislikeButton").style.backgroundColor = "red";
+            }
+        //////////////////////////////////////////////////////////////////////////////
+        } else if ((likeStatus == 1 && document.getElementById("likeButton").style.backgroundColor != "lightblue")
+            || (likeStatus == 2 && document.getElementById("dislikeButton").style.backgroundColor != "red")){
+
+            if (likeStatus == 1) { //They clicked like
+                document.getElementById("likeButton").style.backgroundColor = "lightblue";
+                document.getElementById("dislikeButton").style.backgroundColor = "#fff";
+            } else { //They clicked dislike
+                document.getElementById("likeButton").style.backgroundColor = "#fff";
+                document.getElementById("dislikeButton").style.backgroundColor = "red";
+            }
+        //////////////////////////////////////////////////////////////////////////////
+        } else {
+            document.getElementById("likeButton").style.backgroundColor = "#fff";
+            document.getElementById("dislikeButton").style.backgroundColor = "#fff";
+        }
+         /**********
+         * END OF COLOR CHANGE CODE
+         ********/
+        }
+</script>
+@if (Session["username"] != null && Session["username"].ToString() != Model.postUserName)
+{//LightBlue = style="background-color:#ADD8E6"
+    <input type="button" id="likeButton"
+           value="Like" class="btn btn-default" onclick="likeOrDislike(1)" />
+    <input type="button" id="dislikeButton"
+           value="Dislike" class="btn btn-default" onclick="likeOrDislike(2)" />
+}
 <h2>Post</h2>
 <h1>Title: @Model.post.Title</h1>
 <h1>User: @Html.ActionLink(Model.postUserName.ToString(), "Details2", "Users", new { id = Model.post.User_ID }, null)</h1>
@@ -33,24 +110,24 @@
     </tr>
     @foreach (var comment in Model.comments)
     {
-    <tr>
+        <tr>
 
-        @if (Session["username"] != null && comment.Username == Session["username"].ToString())
-        {
-            <td>@comment.Comment1 | @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.ID, postId = Model.post.ID }, null)</td>
-        }
-        else
-        {
-            <td>
-                @comment.Comment1
-            </td>
+            @if (Session["username"] != null && comment.Username == Session["username"].ToString())
+            {
+                <td>@comment.Comment1 | @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.ID, postId = Model.post.ID }, null)</td>
             }
-        <td>
-            <a href="@Url.Action("Details2", "Users", new { id = comment.User_ID}, null)">
-                @comment.Username
-            </a>
-        </td>
+            else
+            {
+                <td>
+                    @comment.Comment1
+                </td>
+            }
+            <td>
+                <a href="@Url.Action("Details2", "Users", new { id = comment.User_ID}, null)">
+                    @comment.Username
+                </a>
+            </td>
 
-    </tr>
+        </tr>
     }
 </table>
