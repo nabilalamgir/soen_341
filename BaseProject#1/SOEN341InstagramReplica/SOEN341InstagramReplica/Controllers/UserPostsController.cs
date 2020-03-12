@@ -182,7 +182,7 @@ namespace SOEN341InstagramReplica.Controllers
         public ActionResult LikeOrDislike(int newRatingStatus, int loggedInUser, int postID)
         {
 
-
+            UserPost post = db.UserPosts.Find(postID);
             //Check if record already exists of user liking or disliking this post
             LikeDislikeList returnStatus = new LikeDislikeList();
             if (db.LikeDislikeLists.Where(x => (x.PostId == postID) && x.UserId == loggedInUser).Select(x => x.LikeOrDislike).FirstOrDefault() != 0)
@@ -194,12 +194,32 @@ namespace SOEN341InstagramReplica.Controllers
                 //User already liked or disliked but wants to cancel
                 if (currentRating.LikeOrDislike == newRatingStatus)
                 {
+                    //Decrement the rating
+                    if(currentRating.LikeOrDislike == 1)
+                    {
+                        post.Likes = post.Likes - 1;
+                    }
+                    else
+                    {
+                        post.Dislikes = post.Dislikes - 1;
+                    }
                     db.LikeDislikeLists.Remove(currentRating);
                     db.SaveChanges();
                     currentRating.LikeOrDislike = 0;
                 }
                 else //They are changing their like status
                 {
+                    //Increase/Decrease one rating while increasing/decreasing the other
+                    if (newRatingStatus == 1)
+                    {
+                        post.Likes = post.Likes + 1;
+                        post.Dislikes = post.Dislikes - 1;
+                    }
+                    else
+                    {
+                        post.Likes = post.Likes - 1;
+                        post.Dislikes = post.Dislikes + 1;
+                    }
 
                     currentRating.LikeOrDislike = newRatingStatus;
                     db.Entry(currentRating).State = EntityState.Modified;
@@ -212,6 +232,16 @@ namespace SOEN341InstagramReplica.Controllers
             }
             else
             {
+                //Increase the rating that was clicked by user
+                if (newRatingStatus == 1)
+                {
+                    post.Likes = post.Likes + 1;
+                }
+                else
+                {
+                    post.Dislikes = post.Dislikes + 1;
+                }
+
                 LikeDislikeList newRating = new LikeDislikeList();
                 newRating.LikeOrDislike = newRatingStatus;
                 newRating.PostId = postID;
