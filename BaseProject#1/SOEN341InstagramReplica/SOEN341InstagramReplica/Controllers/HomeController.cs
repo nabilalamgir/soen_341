@@ -44,6 +44,7 @@ namespace SOEN341InstagramReplica.Controllers
                 int userId = (int)(from x in db.Users where x.Username == model.Username.ToString() select x.ID).SingleOrDefault();
                 Session["username"] = model.Username.ToString();
                 Session["id"] = userId;
+                Session["role"] = model.Role.ToString();
                 return RedirectToAction("Index");
              }
             
@@ -69,12 +70,14 @@ namespace SOEN341InstagramReplica.Controllers
                 int test = (db.Users.Where(x => x.Username == model.Username).Count());
                 if ((db.Users.Where(x => x.Username == model.Username).Count()) == 0){
                     model.Date_Joined = DateTime.Now;
+                    model.Role = "REGULAR";
                     db.Users.Add(model);
                     db.SaveChanges();
                     ModelState.Clear();
                     ViewBag.SuccessMessage = "Registration Successful";
                     Session["id"] = model.ID;
                     Session["username"] = model.First_Name;
+                    Session["role"] = model.Role.ToString();
                     return RedirectToAction("Index");                    
                 }
                 else
