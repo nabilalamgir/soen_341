@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ba740d995fff49cfbe0ab7633b0ca0fb" Name="Diagram1">
+      <Diagram DiagramId="a3b00399f28443358b4d5212d42cca45" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="SOEN341Model.Comment" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="SOEN341Model.FollowList" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SOEN341Model.LikeDislikeList" Width="1.5" PointX="8.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.LikeDislikeList" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SOEN341Model.UserPost" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SOEN341Model.User" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.User" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
         <AssociationConnector Association="SOEN341Model.FK__Comments__Post_I__1EA48E88" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__Comments__User_I__5DCAEF64" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__FollowLis__Follo__2E1BDC42" ManuallyRouted="false" />

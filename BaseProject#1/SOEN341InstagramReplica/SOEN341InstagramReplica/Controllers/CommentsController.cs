@@ -14,6 +14,18 @@ namespace SOEN341InstagramReplica.Controllers
     {
         private SOEN341Entities db = new SOEN341Entities();
 
+        /*
+         * THE FOLLOWING ACTIONS ARE GOING TO BE
+         * INACCESSIBLE TO REGULAR USERS. IN FACT
+         * IT ISN'T PART OF THE PROJECT SINCE
+         * MOST OF THESE ACTIONS AREN'T SENSIBLE.
+         * THEY ARE ONLY GOOD FOR DEVELOPERS SO
+         * WHILE THEY ARE GOING TO BE ACCESSIBLE,
+         * IT WILL ONLY BE US AND ONLY IF WE ARE THE ONES
+         * LOGGING IN. OTHERS IF THEY TRY TO BRUTE FORCE
+         * TO THE LINK, THEY WILL BE REROUTED.
+         * 
+         */
         // GET: Comments
         public ActionResult Index()
         {

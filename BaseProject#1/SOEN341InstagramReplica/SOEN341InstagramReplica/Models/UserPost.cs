@@ -11,8 +11,7 @@ namespace SOEN341InstagramReplica.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class UserPost
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,9 +22,7 @@ namespace SOEN341InstagramReplica.Models
         }
     
         public int ID { get; set; }
-        [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
-        [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
         public byte[] POST { get; set; }
         public Nullable<int> Likes { get; set; }

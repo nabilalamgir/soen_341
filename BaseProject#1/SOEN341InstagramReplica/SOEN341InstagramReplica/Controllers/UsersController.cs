@@ -14,10 +14,28 @@ namespace SOEN341InstagramReplica.Controllers
     {
         private SOEN341Entities db = new SOEN341Entities();
 
+        /*
+         * This is one of the pages that only the dev should be able to access
+         * so it can only be accessed by someone who's role is ADMIN.
+         * If it a regular user, then they will be redirected to their
+         * profile. Otherwise they get sent to the login page.
+         */
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            if(Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else if(Session["role"].ToString() == "ADMIN")
+            {
+                return View(db.Users.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Details2", "Users", new { id = Session["id"] });
+            }
+            
         }
 
         // GET: Users/Details/5

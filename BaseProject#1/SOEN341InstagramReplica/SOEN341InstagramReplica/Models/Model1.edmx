@@ -60,6 +60,7 @@
           <Property Name="Age" Type="int" />
           <Property Name="DOB" Type="date" />
           <Property Name="Date_Joined" Type="date" />
+          <Property Name="Role" Type="varchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK__Comments__Post_I__1EA48E88">
           <End Role="UserPosts" Type="Self.UserPosts" Multiplicity="1">
@@ -255,6 +256,7 @@
           <Property Name="Age" Type="Int32" />
           <Property Name="DOB" Type="DateTime" Precision="0" />
           <Property Name="Date_Joined" Type="DateTime" Precision="0" />
+          <Property Name="Role" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__User_I__5DCAEF64" FromRole="Users" ToRole="Comments" />
           <NavigationProperty Name="FollowLists" Relationship="Self.FK__FollowLis__Follo__2E1BDC42" FromRole="Users" ToRole="FollowList" />
           <NavigationProperty Name="FollowLists1" Relationship="Self.FK__FollowLis__Follo__2F10007B" FromRole="Users" ToRole="FollowList" />
@@ -351,7 +353,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SOEN341Entities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SOEN341Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="FollowLists" EntityType="Self.FollowList" />
           <EntitySet Name="LikeDislikeLists" EntityType="Self.LikeDislikeList" />
@@ -391,7 +393,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SOEN341ModelStoreContainer" CdmEntityContainer="SOEN341Entities2">
+        <EntityContainerMapping StorageEntityContainer="SOEN341ModelStoreContainer" CdmEntityContainer="SOEN341Entities">
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="SOEN341Model.Comment">
               <MappingFragment StoreEntitySet="Comments">
@@ -450,6 +452,7 @@
                 <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Date_Joined" ColumnName="Date_Joined" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

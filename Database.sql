@@ -1,15 +1,18 @@
 CREATE TABLE [dbo].[Users] (
-    [ID]			INT	IDENTITY(1,1)	NOT NULL PRIMARY KEY, /* IDENTITY means it starts at 1 and increments by 1 */
-	[First_Name]	VARCHAR (100)		NOT NULL,
-	[Last_Name]		VARCHAR (100)		NOT NULL,
-	[Username]      VARCHAR (100)		NOT NULL UNIQUE,
-	[Password]		VARCHAR (100)		NOT NULL,
-	[Email]			VARCHAR (100)		NOT NULL UNIQUE,
-    [Age]			INT					NULL,
-    [DOB]			DATE				NULL, /* Date of birth */
-	[Date_Joined]	DATE DEFAULT GETDATE()
+    [ID]          INT           IDENTITY (1, 1) NOT NULL,
+    [First_Name]  VARCHAR (100) NOT NULL,
+    [Last_Name]   VARCHAR (100) NOT NULL,
+    [Username]    VARCHAR (100) NOT NULL,
+    [Password]    VARCHAR (100) NOT NULL,
+    [Email]       VARCHAR (100) NOT NULL,
+    [Age]         INT           DEFAULT ((0)) NULL,
+    [DOB]         DATE          NULL,
+    [Date_Joined] DATE          DEFAULT (getdate()) NULL,
+    [Role]        VARCHAR (100) DEFAULT ('REGULAR') NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC),
+    UNIQUE NONCLUSTERED ([Username] ASC),
+    UNIQUE NONCLUSTERED ([Email] ASC)
 );
-
 CREATE TABLE [dbo].[UserPosts](
 	[ID]			INT	IDENTITY (1, 1)	NOT NULL PRIMARY KEY,
 	[Title]			VARCHAR (100)		NOT NULL,
