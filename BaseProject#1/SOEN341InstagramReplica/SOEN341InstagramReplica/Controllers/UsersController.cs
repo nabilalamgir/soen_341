@@ -15,14 +15,21 @@ namespace SOEN341InstagramReplica.Controllers
         private SOEN341Entities db = new SOEN341Entities();
 
         /*
+         * Here are the actions that only admins should have access to:
+         * - Index
+         * - Create
+         * - Edit
          * This is one of the pages that only the dev should be able to access
          * so it can only be accessed by someone who's role is ADMIN.
          * If it a regular user, then they will be redirected to their
          * profile. Otherwise they get sent to the login page.
          */
+
+
         // GET: Users
         public ActionResult Index()
         {
+            //To check for admin or regular user
             if(Session["username"] == null)
             {
                 return RedirectToAction("Login", "Home");
@@ -107,7 +114,20 @@ namespace SOEN341InstagramReplica.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            //To check for admin or regular user
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else if (Session["role"].ToString() == "ADMIN")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Details2", "Users", new { id = Session["id"] });
+            }
+            
         }
 
         // POST: Users/Create
@@ -130,6 +150,16 @@ namespace SOEN341InstagramReplica.Controllers
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
+            //To check for admin or regular user
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else if (Session["role"].ToString() != "ADMIN")
+            {
+                return RedirectToAction("Details2", "Users", new { id = Session["id"] });
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -194,6 +224,7 @@ namespace SOEN341InstagramReplica.Controllers
             }
             base.Dispose(disposing);
         }
+
         public ActionResult MySubscriptions(int id)
         {
             List<SubNamesAndLatestPost> list = new List<SubNamesAndLatestPost>();
@@ -238,5 +269,6 @@ namespace SOEN341InstagramReplica.Controllers
             user.following = "unfollowing";
             return Json(new { user, Status = "Ok", Error = "" });
         }
+
     }
 }

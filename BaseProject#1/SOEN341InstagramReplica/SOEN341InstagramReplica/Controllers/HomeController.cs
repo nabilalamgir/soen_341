@@ -9,6 +9,8 @@ namespace SOEN341InstagramReplica.Controllers
 {
     public class HomeController : Controller
     {
+        private SOEN341Entities db = new SOEN341Entities();
+
         public ActionResult Index()
         {
             return View();
@@ -44,7 +46,7 @@ namespace SOEN341InstagramReplica.Controllers
                 int userId = (int)(from x in db.Users where x.Username == model.Username.ToString() select x.ID).SingleOrDefault();
                 Session["username"] = model.Username.ToString();
                 Session["id"] = userId;
-                Session["role"] = model.Role.ToString();
+                Session["role"] = (from x in db.Users where x.Username == model.Username.ToString() select x.Role).SingleOrDefault(); ToString();
                 return RedirectToAction("Index");
              }
             
@@ -98,7 +100,6 @@ namespace SOEN341InstagramReplica.Controllers
 
         public ActionResult SignOut()
         {
-            //Session.Remove("username");
             Session.RemoveAll();
             return RedirectToAction("Index", "Home");
         }
@@ -115,6 +116,101 @@ namespace SOEN341InstagramReplica.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Trending(string sortOrder)
+        {
+            ViewBag.DateSortParm = String.IsNullOrEmpty(sortOrder) ? "date_asc" : "";
+            ViewBag.TitleSortParm = sortOrder == "Title" ? "title_desc" : "Title";
+            ViewBag.LikesSortParm = sortOrder == "Likes" ? "likes_desc" : "Likes";
+            ViewBag.DislikesSortParm = sortOrder == "Dislikes" ? "dislikes_desc" : "Dislikes";
+            ViewBag.UserNameSortParm = sortOrder == "UserName" ? "userName_desc" : "UserName";
+
+            var posts = from x in db.UserPosts select x;
+            switch (sortOrder)
+            {
+                case "date_asc":
+                    posts = posts.OrderBy(p => p.Date_Posted);
+                    break;
+                case "Title":
+                    posts = posts.OrderBy(p => p.Title);
+                    break;
+                case "title_desc":
+                    posts = posts.OrderByDescending(p => p.Title);
+                    break;
+                case "Likes":
+                    posts = posts.OrderBy(p => p.Likes);
+                    break;
+                case "likes_desc":
+                    posts = posts.OrderByDescending(p => p.Likes);
+                    break;
+                case "Dislikes":
+                    posts = posts.OrderBy(p => p.Dislikes);
+                    break;
+                case "dislikes_desc":
+                    posts = posts.OrderByDescending(p => p.Dislikes);
+                    break;
+                case "UserName":
+                    posts = posts.OrderBy(p => p.User.Username);
+                    break;
+                case "userName_desc":
+                    posts = posts.OrderByDescending(p => p.User.Username);
+                    break;
+                default:
+                    posts = posts.OrderByDescending(p => p.Date_Posted);
+                    break;
+            }
+            return View(posts.ToList());
+        }
+
+        public ActionResult Trending2(string sortOrder, string searchString)
+        {
+            ViewBag.DateSortParm = String.IsNullOrEmpty(sortOrder) ? "date_asc" : "";
+            ViewBag.TitleSortParm = sortOrder == "Title" ? "title_desc" : "Title";
+            ViewBag.LikesSortParm = sortOrder == "Likes" ? "likes_desc" : "Likes";
+            ViewBag.DislikesSortParm = sortOrder == "Dislikes" ? "dislikes_desc" : "Dislikes";
+            ViewBag.UserNameSortParm = sortOrder == "UserName" ? "userName_desc" : "UserName";
+
+            var posts = from x in db.UserPosts select x;
+
+            if (!String.IsNullOrEmpty(searchString)){
+                posts = posts.Where(x => x.Title.Contains(searchString) || x.User.Username.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "date_asc":
+                    posts = posts.OrderBy(p => p.Date_Posted);
+                    break;
+                case "Title":
+                    posts = posts.OrderBy(p => p.Title);
+                    break;
+                case "title_desc":
+                    posts = posts.OrderByDescending(p => p.Title);
+                    break;
+                case "Likes":
+                    posts = posts.OrderBy(p => p.Likes);
+                    break;
+                case "likes_desc":
+                    posts = posts.OrderByDescending(p => p.Likes);
+                    break;
+                case "Dislikes":
+                    posts = posts.OrderBy(p => p.Dislikes);
+                    break;
+                case "dislikes_desc":
+                    posts = posts.OrderByDescending(p => p.Dislikes);
+                    break;
+                case "UserName":
+                    posts = posts.OrderBy(p => p.User.Username);
+                    break;
+                case "userName_desc":
+                    posts = posts.OrderByDescending(p => p.User.Username);
+                    break;
+                default:
+                    posts = posts.OrderByDescending(p => p.Date_Posted);
+                    break;
+            }
+            return View(posts.ToList());
         }
     }
 }

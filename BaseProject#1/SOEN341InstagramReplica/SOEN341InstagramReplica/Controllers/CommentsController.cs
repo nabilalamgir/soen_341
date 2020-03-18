@@ -29,13 +29,37 @@ namespace SOEN341InstagramReplica.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            var comments = db.Comments.Include(c => c.UserPost).Include(c => c.User);
-            return View(comments.ToList());
+            //To check for admin or regular user
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else if (Session["role"].ToString() == "ADMIN")
+            {
+                var comments = db.Comments.Include(c => c.UserPost).Include(c => c.User);
+                return View(comments.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Details2", "Users", new { id = Session["id"] });
+            }
+
+            
         }
 
         // GET: Comments/Details/5
         public ActionResult Details(int? id)
         {
+            //To check for admin or regular user
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else if (Session["role"].ToString() != "ADMIN")
+            {
+                return RedirectToAction("Details2", "Users", new { id = Session["id"] });
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
