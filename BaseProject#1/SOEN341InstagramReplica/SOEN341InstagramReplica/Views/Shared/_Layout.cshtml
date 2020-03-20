@@ -8,6 +8,13 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @{ 
+        List<string> glist = new List<string>();
+        glist.Add("Post Title");
+        glist.Add("Username");
+        ViewBag.PostAndOrUsername = new SelectList(glist);
+     }
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -21,11 +28,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <!--
-                    Code below
-                    This will check t=if the username has been saved in the session["username"]
-                    and if there is, then a link to the user's profile will appear with their
-                    username as the visual as well as the option to log out
-                    -->
+    Code below
+    This will check t=if the username has been saved in the session["username"]
+    and if there is, then a link to the user's profile will appear with their
+    username as the visual as well as the option to log out
+    -->
                     @if (Session["username"] != null)
                     {
                         <li>
@@ -41,12 +48,19 @@
                         <li>
                             <a href="@Url.Action("SignOut", "Home")">Sign Out</a>
                         </li>
-
+                        using (Html.BeginForm("GlobalSearch", "Home", FormMethod.Get))
+                        {
+                            <li>
+                                Search by @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername"})
+                                : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                                <input type="submit" value="Search" />
+                            </li>
+                        }
                     }
-                    else/*This means that no one is logged in
-                                            Meaning the user will have the option to either sign up and create
-                                            an account or login to an existing one
-                                            */
+                    else/*This means that no one is logged in.
+                            Meaning the user will have the option to either sign up and create
+                            an account or login to an existing one
+                            */
                     {
                         <li>
                             <a href="@Url.Action("SignUp", "Home")">Sign Up</a>
@@ -54,8 +68,16 @@
                         <li>
                             <a href="@Url.Action("Login", "Home")">Login</a>
                         </li>
+                        using (Html.BeginForm("GlobalSearch", "Home", FormMethod.Get))
+                        {
+                            <li>
+                                Search by @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername" })
+                                : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                                <input type="submit" value="Search" />
+                            </li>
+                        }
                     }
-                    
+
                 </ul>
             </div>
         </div>

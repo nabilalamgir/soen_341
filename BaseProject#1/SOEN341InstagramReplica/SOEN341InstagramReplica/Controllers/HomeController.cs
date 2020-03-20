@@ -198,6 +198,48 @@ namespace SOEN341InstagramReplica.Controllers
             int pageNumber = (page ?? 1);
             return View(posts.ToPagedList(pageNumber, pageSize));
         }
+        public ActionResult GlobalSearch(string searchString, string postAndOrUsername)
+        {
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                if (postAndOrUsername == "Username")
+                {
+                    List<User> lst_users = new List<User>();
+                    var user = from x in db.Users select x;
+                    user = user.Where(x => x.Username.Contains(searchString));
+                    lst_users = user.ToList();
+                    return View("~/Views/Users/Index.cshtml",lst_users);
+                }
+                else
+                {
+                    List<UserPost> lst_posts = new List<UserPost>();
+                    var posts = from x in db.UserPosts select x;
+                    posts = posts.Where(x => x.Title.Contains(searchString));
+                    lst_posts = posts.ToList();
+                    return View("~/Views/UserPosts/Index.cshtml",lst_posts);
+                }
+            }
+            else
+            {
+                if (postAndOrUsername == "Username")
+                {
+                    List<User> lst_users = new List<User>();
+                    var user = from x in db.Users select x;
+                    lst_users = user.ToList();
+                    return View("~/Views/Users/Index.cshtml", lst_users);
+                }
+                else
+                {
+                    List<UserPost> lst_posts = new List<UserPost>();
+                    var posts = from x in db.UserPosts select x;
+                    lst_posts = posts.ToList();
+                    return View("~/Views/UserPosts/Index.cshtml", lst_posts);
+                }
+            }
+            
+        }
+
 
     }
 }
