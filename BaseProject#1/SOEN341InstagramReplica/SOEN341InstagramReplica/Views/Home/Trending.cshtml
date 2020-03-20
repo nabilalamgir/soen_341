@@ -45,7 +45,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.ActionLink(item.Title, "Details2", "UserPosts", new { id = item.ID }, null)
             </td>
             <td>
                 @{
@@ -65,7 +65,7 @@
                 @Html.DisplayFor(modelItem => item.Date_Posted)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Username)
+                @Html.ActionLink(item.User.Username, "Details2", "Users", new { id = item.User_ID }, null)
             </td>
         </tr>
     }
