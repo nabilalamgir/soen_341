@@ -48,7 +48,7 @@
                         <li>
                             <a href="@Url.Action("SignOut", "Home")">Sign Out</a>
                         </li>
-                        using (Html.BeginForm("GlobalSearch", "Home", FormMethod.Get))
+                        using (Html.BeginForm("Trending", "Home", FormMethod.Get))
                         {
                             <li>
                                 Search by @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername"})
@@ -68,11 +68,13 @@
                         <li>
                             <a href="@Url.Action("Login", "Home")">Login</a>
                         </li>
-                        using (Html.BeginForm("GlobalSearch", "Home", FormMethod.Get))
+                        using (Html.BeginForm("Trending", "Home", FormMethod.Get))
                         {
                             <li>
-                                Search by @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername" })
-                                : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                                @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername" })
+                            </li>
+                            <li>
+                                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
                                 <input type="submit" value="Search" />
                             </li>
                         }
