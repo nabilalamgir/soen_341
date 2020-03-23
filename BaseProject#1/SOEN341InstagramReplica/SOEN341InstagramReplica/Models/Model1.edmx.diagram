@@ -4,18 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a3b00399f28443358b4d5212d42cca45" Name="Diagram1" ZoomLevel="72">
-        <EntityTypeShape EntityType="SOEN341Model.Comment" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="SOEN341Model.FollowList" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SOEN341Model.LikeDislikeList" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SOEN341Model.UserPost" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SOEN341Model.User" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+      <Diagram DiagramId="f3fa3bbaf6d74115a649f9d806321f94" Name="Diagram1" ZoomLevel="63">
+        <EntityTypeShape EntityType="SOEN341Model.Comment" Width="1.5" PointX="5.25" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.FavouritesList" Width="1.5" PointX="5.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.FollowList" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.LikeDislikeList" Width="1.5" PointX="8.25" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.LinkedAccount" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.UserPost" Width="1.5" PointX="3" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOEN341Model.User" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
         <AssociationConnector Association="SOEN341Model.FK__Comments__Post_I__1EA48E88" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__Comments__User_I__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="SOEN341Model.FK__Favourite__PostI__3D2915A8" ManuallyRouted="false" />
+        <AssociationConnector Association="SOEN341Model.FK__Favourite__UserI__3C34F16F" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__FollowLis__Follo__2E1BDC42" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__FollowLis__Follo__2F10007B" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__LikeDisli__PostI__1F98B2C1" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__LikeDisli__UserI__17036CC0" ManuallyRouted="false" />
+        <AssociationConnector Association="SOEN341Model.FK__LinkedAcc__Accou__42E1EEFE" ManuallyRouted="false" />
+        <AssociationConnector Association="SOEN341Model.FK__LinkedAcc__Accou__43D61337" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__UserPosts__User___208CD6FA" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

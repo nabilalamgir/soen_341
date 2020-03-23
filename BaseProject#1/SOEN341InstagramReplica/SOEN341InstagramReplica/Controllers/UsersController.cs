@@ -246,6 +246,24 @@ namespace SOEN341InstagramReplica.Controllers
             }
             return View(list);
         }
+        public ActionResult MyFavourites()
+        {
+            if (Session["id"] != null) { 
+                List<UserPost> list = new List<UserPost>();
+                int id = (int)Session["id"];
+                List<int> idList = new List<int>();
+                idList = db.FavouritesLists.Where(x => x.UserId == id).Select(x => x.PostId).ToList();
+                foreach (int temp in idList)
+                {
+                    list.Add(db.UserPosts.Find(temp));
+                }
+                return View(list);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+        }
 
         [HttpPost]
         public ActionResult FollowOrUnfollowUser(int newFollowStatus, int loggedInUser, int userProfile)

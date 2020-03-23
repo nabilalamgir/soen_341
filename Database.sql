@@ -120,9 +120,9 @@ BEGIN
 
 	if
 	(select LikeOrDislike from LikeDislikeList where ID = @ID) > 1
-		update UserPosts set Dislikes = (Dislikes - 1) where UserPosts.Id = @postID;
+		update UserPosts set Dislikes = (Dislikes - 1) where UserPosts.ID = @postID;
 	else
-		update UserPosts set Likes = (Likes - 1) where UserPosts.Id = @postID;
+		update UserPosts set Likes = (Likes - 1) where UserPosts.ID = @postID;
 
 	delete from [dbo].[LikeDislikeList] where [dbo].[LikeDislikeList].[ID] = @ID
 	end;

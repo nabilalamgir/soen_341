@@ -18,9 +18,12 @@ namespace SOEN341InstagramReplica.Models
         public User()
         {
             this.Comments = new HashSet<Comment>();
+            this.FavouritesLists = new HashSet<FavouritesList>();
             this.FollowLists = new HashSet<FollowList>();
             this.FollowLists1 = new HashSet<FollowList>();
             this.LikeDislikeLists = new HashSet<LikeDislikeList>();
+            this.LinkedAccounts = new HashSet<LinkedAccount>();
+            this.LinkedAccounts1 = new HashSet<LinkedAccount>();
             this.UserPosts = new HashSet<UserPost>();
         }
     
@@ -38,11 +41,17 @@ namespace SOEN341InstagramReplica.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FavouritesList> FavouritesLists { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowList> FollowLists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowList> FollowLists1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LikeDislikeList> LikeDislikeLists { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LinkedAccount> LinkedAccounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LinkedAccount> LinkedAccounts1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserPost> UserPosts { get; set; }
     }
