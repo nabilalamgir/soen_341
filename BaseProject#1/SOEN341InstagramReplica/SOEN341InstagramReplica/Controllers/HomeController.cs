@@ -1,5 +1,6 @@
 ﻿using System; //Commenting on the project
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -119,7 +120,7 @@ namespace SOEN341InstagramReplica.Controllers
             return View();
         }
 
-        public ActionResult Trending(string sortOrder, string currentFilter, string searchString, int? page, string postAndOrUsername)
+        public ActionResult Search(string sortOrder, string currentFilter, string searchString, int? page, string postAndOrUsername)
         {
 
             ViewBag.CurrentSort = sortOrder;
@@ -198,48 +199,62 @@ namespace SOEN341InstagramReplica.Controllers
             int pageNumber = (page ?? 1);
             return View(posts.ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult GlobalSearch(string searchString, string postAndOrUsername)
-        {
+        //public ActionResult GlobalSearch(string searchString, string postAndOrUsername)
+        //{
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                if (postAndOrUsername == "Username")
-                {
-                    List<User> lst_users = new List<User>();
-                    var user = from x in db.Users select x;
-                    user = user.Where(x => x.Username.Contains(searchString));
-                    lst_users = user.ToList();
-                    return View("~/Views/Users/Index.cshtml",lst_users);
-                }
-                else
-                {
-                    List<UserPost> lst_posts = new List<UserPost>();
-                    var posts = from x in db.UserPosts select x;
-                    posts = posts.Where(x => x.Title.Contains(searchString));
-                    lst_posts = posts.ToList();
-                    return View("~/Views/UserPosts/Index.cshtml",lst_posts);
-                }
-            }
-            else
-            {
-                if (postAndOrUsername == "Username")
-                {
-                    List<User> lst_users = new List<User>();
-                    var user = from x in db.Users select x;
-                    lst_users = user.ToList();
-                    return View("~/Views/Users/Index.cshtml", lst_users);
-                }
-                else
-                {
-                    List<UserPost> lst_posts = new List<UserPost>();
-                    var posts = from x in db.UserPosts select x;
-                    lst_posts = posts.ToList();
-                    return View("~/Views/UserPosts/Index.cshtml", lst_posts);
-                }
-            }
+        //    if (!String.IsNullOrEmpty(searchString))
+        //    {
+        //        if (postAndOrUsername == "Username")
+        //        {
+        //            List<User> lst_users = new List<User>();
+        //            var user = from x in db.Users select x;
+        //            user = user.Where(x => x.Username.Contains(searchString));
+        //            lst_users = user.ToList();
+        //            return View("~/Views/Users/Index.cshtml",lst_users);
+        //        }
+        //        else
+        //        {
+        //            List<UserPost> lst_posts = new List<UserPost>();
+        //            var posts = from x in db.UserPosts select x;
+        //            posts = posts.Where(x => x.Title.Contains(searchString));
+        //            lst_posts = posts.ToList();
+        //            return View("~/Views/UserPosts/Index.cshtml",lst_posts);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (postAndOrUsername == "Username")
+        //        {
+        //            List<User> lst_users = new List<User>();
+        //            var user = from x in db.Users select x;
+        //            lst_users = user.ToList();
+        //            return View("~/Views/Users/Index.cshtml", lst_users);
+        //        }
+        //        else
+        //        {
+        //            List<UserPost> lst_posts = new List<UserPost>();
+        //            var posts = from x in db.UserPosts select x;
+        //            lst_posts = posts.ToList();
+        //            return View("~/Views/UserPosts/Index.cshtml", lst_posts);
+        //        }
+        //    }
             
-        }
+        //}
 
+        public ActionResult Trending()
+        {
+            DateTime this_Week = DateTime.Today.AddDays((int)CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek - (int)DateTime.Today.DayOfWeek);
+            DateTime startWeek = this_Week.AddDays(0);
+            DateTime endWeek = this_Week.AddDays(7);
+
+//System.Diagnostics.Debug.WriteLine(result);
+            System.Diagnostics.Debug.WriteLine("Start of the Week: "+ startWeek);
+            System.Diagnostics.Debug.WriteLine("End of the Week: " + endWeek);
+            List<UserPost> lst_posts = new List<UserPost>();
+            var posts = (from x in db.UserPosts select x).OrderByDescending(p => p.Likes).Where(p => p.Date_Posted >= startWeek && p.Date_Posted < endWeek).Take(5);
+            lst_posts = posts.ToList();
+            return View(lst_posts);
+        }
 
     }
 }

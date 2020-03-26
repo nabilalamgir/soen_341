@@ -48,19 +48,19 @@
                         <li>
                             <a href="@Url.Action("SignOut", "Home")">Sign Out</a>
                         </li>
-                        using (Html.BeginForm("Trending", "Home", FormMethod.Get))
-                        {
-                            <li>
-                                Search by @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername"})
-                                : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-                                <input type="submit" value="Search" />
-                            </li>
-                        }
+                        <li style="padding: 12px 15px;">
+                            @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                            {
+                                @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername" })
+                                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { style = "margin-left: 3px" })
+                                <input type="submit" value="Search" style="margin-left: 3px" />
+                            }
+                        </li>
                     }
                     else/*This means that no one is logged in.
-                            Meaning the user will have the option to either sign up and create
-                            an account or login to an existing one
-                            */
+                                            Meaning the user will have the option to either sign up and create
+                                            an account or login to an existing one
+                                            */
                     {
                         <li>
                             <a href="@Url.Action("SignUp", "Home")">Sign Up</a>
@@ -68,16 +68,14 @@
                         <li>
                             <a href="@Url.Action("Login", "Home")">Login</a>
                         </li>
-                        using (Html.BeginForm("Trending", "Home", FormMethod.Get))
-                        {
-                            <li>
+                        <li style="padding: 12px 15px;">
+                            @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                            {
                                 @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername" })
-                            </li>
-                            <li>
-                                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-                                <input type="submit" value="Search" />
-                            </li>
-                        }
+                                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {style = "margin-left: 3px" })
+                                <input type="submit" value="Search" style="margin-left: 3px"/>
+                            }
+                        </li>
                     }
 
                 </ul>
