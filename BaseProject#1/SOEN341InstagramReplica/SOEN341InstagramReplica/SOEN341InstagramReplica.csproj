@@ -260,6 +260,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Users\Details2.cshtml" />
     <Content Include="Views\Users\MySubscriptions.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\Trending.cshtml" />
     <Content Include="Views\Users\MyFavourites.cshtml" />
     <Content Include="Views\Users\LinkAccount.cshtml" />
