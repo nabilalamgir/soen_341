@@ -1,77 +1,56 @@
-﻿@model PagedList.IPagedList<SOEN341InstagramReplica.Models.UserPost>
-@using PagedList.Mvc;
+﻿@model IEnumerable<SOEN341InstagramReplica.Models.UserPost>
 
 @{
     ViewBag.Title = "Trending";
 }
 
-<h2>Trending</h2>
+<h2>Top 5 most liked photo of the week</h2>
 
-
-@using (Html.BeginForm("Trending", "Home", FormMethod.Get))
-{
-    <p>
-        Find by 
-        @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername", sortOrder = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter })
-        
-        : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
-}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Title", "Trending", new { sortOrder = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername })
+           @Html.DisplayNameFor(model => model.User.Username)
         </th>
         <th>
-            POST
+            @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.ActionLink("Likes", "Trending", new { sortOrder = ViewBag.LikesSortParm, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername })
+            @Html.DisplayNameFor(model => model.POST)
         </th>
         <th>
-            @Html.ActionLink("Dislikes", "Trending", new { sortOrder = ViewBag.DislikesSortParm, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername })
+            @Html.DisplayNameFor(model => model.Likes)
         </th>
         <th>
-            @Html.ActionLink("Date Posted", "Trending", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername })
+            @Html.DisplayNameFor(model => model.Date_Posted)
         </th>
-        <th>
-            @Html.ActionLink("User", "Trending", new { sortOrder = ViewBag.UserNameSortParm, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername })
-        </th>
-        <th></th>
+        
     </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.User.Username, "Details2", "Users", new { id = item.User_ID }, null)
+        </td>
+        <td>
+            @Html.ActionLink(item.Title, "Details2", "UserPosts", new { id = item.ID }, null)
+        </td>
+        <td>
+            @{
+                var base64 = Convert.ToBase64String(item.POST);
+                var imgsrc = string.Format("data:image/png;base64,{0}", base64);
+            }
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(item.Title, "Details2", "UserPosts", new { id = item.ID }, null)
-            </td>
-            <td>
-                @{
-                    var base64 = Convert.ToBase64String(item.POST);
-                    var imgsrc = string.Format("data:image/png;base64,{0}", base64);
-                }
-
-                <img src='@imgsrc' style="max-width:50px;max-height:50px" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Likes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dislikes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date_Posted)
-            </td>
-            <td>
-                @Html.ActionLink(item.User.Username, "Details2", "Users", new { id = item.User_ID }, null)
-            </td>
-        </tr>
-    }
+            <img src='@imgsrc' style="max-width:50px;max-height:50px" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Likes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Posted)
+        </td>
+    </tr>
+}
 
 </table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("Trending", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername }))
