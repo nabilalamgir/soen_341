@@ -87,7 +87,7 @@ CREATE TABLE [dbo].[LinkedAccounts] (
     [Account1ID] INT NOT NULL,
     [Account2ID] INT NOT NULL,
     FOREIGN KEY ([Account1ID]) REFERENCES [dbo].[Users] ([ID]),
-    FOREIGN KEY ([Account2ID]) REFERENCES [dbo].[Users] ([ID])
+    FOREIGN KEY ([Account2ID]) REFERENCES [dbo].[Users] ([ID]) ON DELETE CASCADE
 );
 
 GO

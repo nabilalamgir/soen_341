@@ -192,8 +192,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LinkedAcc__Accou__43D61337">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+        <Association Name="FK__LinkedAcc__Accou__4E53A1AA">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LinkedAccounts" Type="Self.LinkedAccounts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -262,7 +264,7 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="LinkedAccounts" EntitySet="LinkedAccounts" />
           </AssociationSet>
-          <AssociationSet Name="FK__LinkedAcc__Accou__43D61337" Association="Self.FK__LinkedAcc__Accou__43D61337">
+          <AssociationSet Name="FK__LinkedAcc__Accou__4E53A1AA" Association="Self.FK__LinkedAcc__Accou__4E53A1AA">
             <End Role="Users" EntitySet="Users" />
             <End Role="LinkedAccounts" EntitySet="LinkedAccounts" />
           </AssociationSet>
@@ -328,7 +330,7 @@
           <Property Name="Account1ID" Type="Int32" Nullable="false" />
           <Property Name="Account2ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK__LinkedAcc__Accou__42E1EEFE" FromRole="LinkedAccounts" ToRole="Users" />
-          <NavigationProperty Name="User1" Relationship="Self.FK__LinkedAcc__Accou__43D61337" FromRole="LinkedAccounts" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__LinkedAcc__Accou__4E53A1AA" FromRole="LinkedAccounts" ToRole="Users" />
         </EntityType>
         <EntityType Name="UserPost">
           <Key>
@@ -368,7 +370,7 @@
           <NavigationProperty Name="FollowLists1" Relationship="Self.FK__FollowLis__Follo__2F10007B" FromRole="Users" ToRole="FollowList" />
           <NavigationProperty Name="LikeDislikeLists" Relationship="Self.FK__LikeDisli__UserI__17036CC0" FromRole="Users" ToRole="LikeDislikeList" />
           <NavigationProperty Name="LinkedAccounts" Relationship="Self.FK__LinkedAcc__Accou__42E1EEFE" FromRole="Users" ToRole="LinkedAccounts" />
-          <NavigationProperty Name="LinkedAccounts1" Relationship="Self.FK__LinkedAcc__Accou__43D61337" FromRole="Users" ToRole="LinkedAccounts" />
+          <NavigationProperty Name="LinkedAccounts1" Relationship="Self.FK__LinkedAcc__Accou__4E53A1AA" FromRole="Users" ToRole="LinkedAccounts" />
           <NavigationProperty Name="UserPosts" Relationship="Self.FK__UserPosts__User___208CD6FA" FromRole="Users" ToRole="UserPosts" />
         </EntityType>
         <Association Name="FK__Comments__Post_I__1EA48E88">
@@ -485,8 +487,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LinkedAcc__Accou__43D61337">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
+        <Association Name="FK__LinkedAcc__Accou__4E53A1AA">
+          <End Role="Users" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LinkedAccounts" Type="Self.LinkedAccount" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -511,7 +515,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SOEN341Entities4" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="FavouritesLists" EntityType="Self.FavouritesList" />
           <EntitySet Name="FollowLists" EntityType="Self.FollowList" />
@@ -555,7 +559,7 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="LinkedAccounts" EntitySet="LinkedAccounts" />
           </AssociationSet>
-          <AssociationSet Name="FK__LinkedAcc__Accou__43D61337" Association="Self.FK__LinkedAcc__Accou__43D61337">
+          <AssociationSet Name="FK__LinkedAcc__Accou__4E53A1AA" Association="Self.FK__LinkedAcc__Accou__4E53A1AA">
             <End Role="Users" EntitySet="Users" />
             <End Role="LinkedAccounts" EntitySet="LinkedAccounts" />
           </AssociationSet>
@@ -569,7 +573,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SOEN341ModelStoreContainer" CdmEntityContainer="SOEN341Entities4">
+        <EntityContainerMapping StorageEntityContainer="SOEN341ModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="SOEN341Model.Comment">
               <MappingFragment StoreEntitySet="Comments">

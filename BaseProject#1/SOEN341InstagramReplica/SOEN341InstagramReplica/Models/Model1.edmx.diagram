@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f3fa3bbaf6d74115a649f9d806321f94" Name="Diagram1" ZoomLevel="63">
+      <Diagram DiagramId="6123f25a7f3b44a8b794b6767515dd41" Name="Diagram1">
         <EntityTypeShape EntityType="SOEN341Model.Comment" Width="1.5" PointX="5.25" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="SOEN341Model.FavouritesList" Width="1.5" PointX="5.25" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SOEN341Model.FollowList" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
@@ -21,7 +21,7 @@
         <AssociationConnector Association="SOEN341Model.FK__LikeDisli__PostI__1F98B2C1" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__LikeDisli__UserI__17036CC0" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__LinkedAcc__Accou__42E1EEFE" ManuallyRouted="false" />
-        <AssociationConnector Association="SOEN341Model.FK__LinkedAcc__Accou__43D61337" ManuallyRouted="false" />
+        <AssociationConnector Association="SOEN341Model.FK__LinkedAcc__Accou__4E53A1AA" ManuallyRouted="false" />
         <AssociationConnector Association="SOEN341Model.FK__UserPosts__User___208CD6FA" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

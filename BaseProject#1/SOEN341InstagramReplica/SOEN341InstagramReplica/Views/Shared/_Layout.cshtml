@@ -42,7 +42,12 @@
                         </li>
                         <li>
                             <a href="@Url.Action("MySubscriptions", "Users", new { id = Session["id"]}, null)">
-                                MySubscriptions
+                                My Subscriptions
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("MyFavourites", "Users", new { id = Session["id"]}, null)">
+                                My Favourites
                             </a>
                         </li>
                         <li>
@@ -51,16 +56,16 @@
                         using (Html.BeginForm("Trending", "Home", FormMethod.Get))
                         {
                             <li>
-                                Search by @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername"})
+                                Search by @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername" })
                                 : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
                                 <input type="submit" value="Search" />
                             </li>
                         }
                     }
                     else/*This means that no one is logged in.
-                            Meaning the user will have the option to either sign up and create
-                            an account or login to an existing one
-                            */
+                                    Meaning the user will have the option to either sign up and create
+                                    an account or login to an existing one
+                                    */
                     {
                         <li>
                             <a href="@Url.Action("SignUp", "Home")">Sign Up</a>

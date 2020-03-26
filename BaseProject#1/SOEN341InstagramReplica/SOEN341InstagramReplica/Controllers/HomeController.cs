@@ -30,7 +30,6 @@ namespace SOEN341InstagramReplica.Controllers
         [HttpPost]
         public ActionResult Login(User model, string returnUrl)
         {
-            SOEN341Entities db = new SOEN341Entities();
 
             /*
              * This will check if the username is in the database while also retrieving the password asociated with the user.
@@ -105,6 +104,7 @@ namespace SOEN341InstagramReplica.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -198,6 +198,7 @@ namespace SOEN341InstagramReplica.Controllers
             int pageNumber = (page ?? 1);
             return View(posts.ToPagedList(pageNumber, pageSize));
         }
+
         public ActionResult GlobalSearch(string searchString, string postAndOrUsername)
         {
 
