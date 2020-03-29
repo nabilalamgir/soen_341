@@ -16,6 +16,14 @@
           <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Post_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="FavouritesList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="FollowList">
           <Key>
             <PropertyRef Name="ID" />
@@ -32,6 +40,14 @@
           <Property Name="LikeOrDislike" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="PostId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LinkedAccounts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account1ID" Type="int" Nullable="false" />
+          <Property Name="Account2ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserPosts">
           <Key>
@@ -88,6 +104,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Favourite__PostI__3D2915A8">
+          <End Role="UserPosts" Type="Self.UserPosts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FavouritesList" Type="Self.FavouritesList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPosts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FavouritesList">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favourite__UserI__3C34F16F">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FavouritesList" Type="Self.FavouritesList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FavouritesList">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__FollowLis__Follo__2E1BDC42">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="FollowList" Type="Self.FollowList" Multiplicity="*" />
@@ -138,6 +180,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__LinkedAcc__Accou__42E1EEFE">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="LinkedAccounts" Type="Self.LinkedAccounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LinkedAccounts">
+              <PropertyRef Name="Account1ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LinkedAcc__Accou__4E53A1AA">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LinkedAccounts" Type="Self.LinkedAccounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LinkedAccounts">
+              <PropertyRef Name="Account2ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__UserPosts__User___208CD6FA">
           <End Role="Users" Type="Self.Users" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -154,8 +222,10 @@
         </Association>
         <EntityContainer Name="SOEN341ModelStoreContainer">
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FavouritesList" EntityType="Self.FavouritesList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FollowList" EntityType="Self.FollowList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LikeDislikeList" EntityType="Self.LikeDislikeList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LinkedAccounts" EntityType="Self.LinkedAccounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPosts" EntityType="Self.UserPosts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Comments__Post_I__1EA48E88" Association="Self.FK__Comments__Post_I__1EA48E88">
@@ -165,6 +235,14 @@
           <AssociationSet Name="FK__Comments__User_I__5DCAEF64" Association="Self.FK__Comments__User_I__5DCAEF64">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favourite__PostI__3D2915A8" Association="Self.FK__Favourite__PostI__3D2915A8">
+            <End Role="UserPosts" EntitySet="UserPosts" />
+            <End Role="FavouritesList" EntitySet="FavouritesList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favourite__UserI__3C34F16F" Association="Self.FK__Favourite__UserI__3C34F16F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FavouritesList" EntitySet="FavouritesList" />
           </AssociationSet>
           <AssociationSet Name="FK__FollowLis__Follo__2E1BDC42" Association="Self.FK__FollowLis__Follo__2E1BDC42">
             <End Role="Users" EntitySet="Users" />
@@ -181,6 +259,14 @@
           <AssociationSet Name="FK__LikeDisli__UserI__17036CC0" Association="Self.FK__LikeDisli__UserI__17036CC0">
             <End Role="Users" EntitySet="Users" />
             <End Role="LikeDislikeList" EntitySet="LikeDislikeList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LinkedAcc__Accou__42E1EEFE" Association="Self.FK__LinkedAcc__Accou__42E1EEFE">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LinkedAccounts" EntitySet="LinkedAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LinkedAcc__Accou__4E53A1AA" Association="Self.FK__LinkedAcc__Accou__4E53A1AA">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LinkedAccounts" EntitySet="LinkedAccounts" />
           </AssociationSet>
           <AssociationSet Name="FK__UserPosts__User___208CD6FA" Association="Self.FK__UserPosts__User___208CD6FA">
             <End Role="Users" EntitySet="Users" />
@@ -205,6 +291,16 @@
           <NavigationProperty Name="UserPost" Relationship="Self.FK__Comments__Post_I__1EA48E88" FromRole="Comments" ToRole="UserPosts" />
           <NavigationProperty Name="User" Relationship="Self.FK__Comments__User_I__5DCAEF64" FromRole="Comments" ToRole="Users" />
         </EntityType>
+        <EntityType Name="FavouritesList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserPost" Relationship="Self.FK__Favourite__PostI__3D2915A8" FromRole="FavouritesList" ToRole="UserPosts" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Favourite__UserI__3C34F16F" FromRole="FavouritesList" ToRole="Users" />
+        </EntityType>
         <EntityType Name="FollowList">
           <Key>
             <PropertyRef Name="ID" />
@@ -226,6 +322,16 @@
           <NavigationProperty Name="UserPost" Relationship="Self.FK__LikeDisli__PostI__1F98B2C1" FromRole="LikeDislikeList" ToRole="UserPosts" />
           <NavigationProperty Name="User" Relationship="Self.FK__LikeDisli__UserI__17036CC0" FromRole="LikeDislikeList" ToRole="Users" />
         </EntityType>
+        <EntityType Name="LinkedAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account1ID" Type="Int32" Nullable="false" />
+          <Property Name="Account2ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__LinkedAcc__Accou__42E1EEFE" FromRole="LinkedAccounts" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__LinkedAcc__Accou__4E53A1AA" FromRole="LinkedAccounts" ToRole="Users" />
+        </EntityType>
         <EntityType Name="UserPost">
           <Key>
             <PropertyRef Name="ID" />
@@ -240,6 +346,7 @@
           <Property Name="Date_Posted" Type="DateTime" Precision="3" />
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__Post_I__1EA48E88" FromRole="UserPosts" ToRole="Comments" />
+          <NavigationProperty Name="FavouritesLists" Relationship="Self.FK__Favourite__PostI__3D2915A8" FromRole="UserPosts" ToRole="FavouritesList" />
           <NavigationProperty Name="LikeDislikeLists" Relationship="Self.FK__LikeDisli__PostI__1F98B2C1" FromRole="UserPosts" ToRole="LikeDislikeList" />
           <NavigationProperty Name="User" Relationship="Self.FK__UserPosts__User___208CD6FA" FromRole="UserPosts" ToRole="Users" />
         </EntityType>
@@ -258,9 +365,12 @@
           <Property Name="Date_Joined" Type="DateTime" Precision="0" />
           <Property Name="Role" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Comments" Relationship="Self.FK__Comments__User_I__5DCAEF64" FromRole="Users" ToRole="Comments" />
+          <NavigationProperty Name="FavouritesLists" Relationship="Self.FK__Favourite__UserI__3C34F16F" FromRole="Users" ToRole="FavouritesList" />
           <NavigationProperty Name="FollowLists" Relationship="Self.FK__FollowLis__Follo__2E1BDC42" FromRole="Users" ToRole="FollowList" />
           <NavigationProperty Name="FollowLists1" Relationship="Self.FK__FollowLis__Follo__2F10007B" FromRole="Users" ToRole="FollowList" />
           <NavigationProperty Name="LikeDislikeLists" Relationship="Self.FK__LikeDisli__UserI__17036CC0" FromRole="Users" ToRole="LikeDislikeList" />
+          <NavigationProperty Name="LinkedAccounts" Relationship="Self.FK__LinkedAcc__Accou__42E1EEFE" FromRole="Users" ToRole="LinkedAccounts" />
+          <NavigationProperty Name="LinkedAccounts1" Relationship="Self.FK__LinkedAcc__Accou__4E53A1AA" FromRole="Users" ToRole="LinkedAccounts" />
           <NavigationProperty Name="UserPosts" Relationship="Self.FK__UserPosts__User___208CD6FA" FromRole="Users" ToRole="UserPosts" />
         </EntityType>
         <Association Name="FK__Comments__Post_I__1EA48E88">
@@ -286,6 +396,32 @@
             </Principal>
             <Dependent Role="Comments">
               <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favourite__PostI__3D2915A8">
+          <End Role="UserPosts" Type="Self.UserPost" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FavouritesList" Type="Self.FavouritesList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPosts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FavouritesList">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favourite__UserI__3C34F16F">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="FavouritesList" Type="Self.FavouritesList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FavouritesList">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -339,6 +475,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__LinkedAcc__Accou__42E1EEFE">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="LinkedAccounts" Type="Self.LinkedAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LinkedAccounts">
+              <PropertyRef Name="Account1ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LinkedAcc__Accou__4E53A1AA">
+          <End Role="Users" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LinkedAccounts" Type="Self.LinkedAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LinkedAccounts">
+              <PropertyRef Name="Account2ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__UserPosts__User___208CD6FA">
           <End Role="Users" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -353,10 +515,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SOEN341Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="FavouritesLists" EntityType="Self.FavouritesList" />
           <EntitySet Name="FollowLists" EntityType="Self.FollowList" />
           <EntitySet Name="LikeDislikeLists" EntityType="Self.LikeDislikeList" />
+          <EntitySet Name="LinkedAccounts" EntityType="Self.LinkedAccount" />
           <EntitySet Name="UserPosts" EntityType="Self.UserPost" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK__Comments__Post_I__1EA48E88" Association="Self.FK__Comments__Post_I__1EA48E88">
@@ -366,6 +530,14 @@
           <AssociationSet Name="FK__Comments__User_I__5DCAEF64" Association="Self.FK__Comments__User_I__5DCAEF64">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favourite__PostI__3D2915A8" Association="Self.FK__Favourite__PostI__3D2915A8">
+            <End Role="UserPosts" EntitySet="UserPosts" />
+            <End Role="FavouritesList" EntitySet="FavouritesLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favourite__UserI__3C34F16F" Association="Self.FK__Favourite__UserI__3C34F16F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FavouritesList" EntitySet="FavouritesLists" />
           </AssociationSet>
           <AssociationSet Name="FK__FollowLis__Follo__2E1BDC42" Association="Self.FK__FollowLis__Follo__2E1BDC42">
             <End Role="Users" EntitySet="Users" />
@@ -383,6 +555,14 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="LikeDislikeList" EntitySet="LikeDislikeLists" />
           </AssociationSet>
+          <AssociationSet Name="FK__LinkedAcc__Accou__42E1EEFE" Association="Self.FK__LinkedAcc__Accou__42E1EEFE">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LinkedAccounts" EntitySet="LinkedAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LinkedAcc__Accou__4E53A1AA" Association="Self.FK__LinkedAcc__Accou__4E53A1AA">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LinkedAccounts" EntitySet="LinkedAccounts" />
+          </AssociationSet>
           <AssociationSet Name="FK__UserPosts__User___208CD6FA" Association="Self.FK__UserPosts__User___208CD6FA">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserPosts" EntitySet="UserPosts" />
@@ -393,7 +573,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SOEN341ModelStoreContainer" CdmEntityContainer="SOEN341Entities">
+        <EntityContainerMapping StorageEntityContainer="SOEN341ModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="SOEN341Model.Comment">
               <MappingFragment StoreEntitySet="Comments">
@@ -403,6 +583,15 @@
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Post_ID" ColumnName="Post_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FavouritesLists">
+            <EntityTypeMapping TypeName="SOEN341Model.FavouritesList">
+              <MappingFragment StoreEntitySet="FavouritesList">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -422,6 +611,15 @@
                 <ScalarProperty Name="LikeOrDislike" ColumnName="LikeOrDislike" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LinkedAccounts">
+            <EntityTypeMapping TypeName="SOEN341Model.LinkedAccount">
+              <MappingFragment StoreEntitySet="LinkedAccounts">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Account1ID" ColumnName="Account1ID" />
+                <ScalarProperty Name="Account2ID" ColumnName="Account2ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

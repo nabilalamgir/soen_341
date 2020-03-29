@@ -13,12 +13,16 @@
             } else if (@Model.likeStatus == 2) { //There is a record of it being disliked
                 document.getElementById("dislikeButton").style.backgroundColor = "red";
             }
+            if (@Model.favourite == 1) {
+                //alert("yes");
+                document.getElementById("changeFavouriteButton").style.backgroundColor = "yellow";
+            }
             //#fff default background
         }
     }
 
     //$(window).load(function () {
-        
+
     //});
     function likeOrDislike(likeStatus) {
             //alert("currently= " + @Model.likeStatus);
@@ -26,7 +30,7 @@
                 //alert("clicked like= " + likeStatus);
             } else { //They clicked dislike
                 //alert("clicked dislike= " + likeStatus);
-            }        
+            }
             $.post('@Url.Action("LikeOrDislike", "UserPosts")',
             { "newRatingStatus": likeStatus, "loggedInUser": @Session["id"], "postID": @Model.post.ID}).done
             (function (data, status, error) {
@@ -72,7 +76,25 @@
          /**********
          * END OF COLOR CHANGE CODE
          ********/
+    }
+    function ChangeFavourite(sentButton) {
+
+        $.post('@Url.Action("changeFavourite", "UserPosts")',
+            {  "loggedInUser": @Session["id"], "postID": @Model.post.ID}).done
+            (function (data, status, error) {
+            }).fail(function (data) {
+            });
+
+        //alert(document.getElementById("changeFavouriteButton").style.backgroundColor.toString());
+        if (document.getElementById("changeFavouriteButton").style.backgroundColor == "yellow") {
+            //alert("enter and blank");
+            document.getElementById("changeFavouriteButton").style.backgroundColor = "#fff";
         }
+        else {
+            //alert("enter and yellow")
+            document.getElementById("changeFavouriteButton").style.backgroundColor = "yellow";
+        }
+    }
 </script>
 @if (Session["username"] != null && Session["username"].ToString() != Model.postUserName)
 {//LightBlue = style="background-color:#ADD8E6"
@@ -80,9 +102,13 @@
            value="Like" class="btn btn-default" onclick="likeOrDislike(1)" />
     <input type="button" id="dislikeButton"
            value="Dislike" class="btn btn-default" onclick="likeOrDislike(2)" />
+    <input type="button" id="changeFavouriteButton"
+           value="Favourite" class="btn btn-default" onclick="ChangeFavourite()" />
+    
 }
 <h2>Post</h2>
 <h1>Title: @Model.post.Title</h1>
+<p>Likes: @Model.post.Likes Dislikes: @Model.post.Dislikes</p>
 <h1>User: @Html.ActionLink(Model.postUserName.ToString(), "Details2", "Users", new { id = Model.post.User_ID }, null)</h1>
 
 @{

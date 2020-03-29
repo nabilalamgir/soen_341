@@ -60,6 +60,21 @@ namespace SOEN341InstagramReplica.Controllers
                 {
                     postAndComments.likeStatus = 0;
                 }
+
+                if(db.FavouritesLists.Where(x=> (x.PostId == userPost.ID) && x.UserId == sessionId).Count() != 0)
+                {
+                    postAndComments.favourite = 1;
+                    ViewBag.favourite = 1;
+                }
+                else
+                {
+                    postAndComments.favourite = 0;
+                    ViewBag.favourite = 0;
+                }
+            }
+            else
+            {
+                postAndComments.favourite = 0;
             }
 
 
@@ -253,6 +268,28 @@ namespace SOEN341InstagramReplica.Controllers
             return Json(new { returnStatus, Status = "Ok", Error = "" });
         }
 
+        [HttpPost]
+        public ActionResult changeFavourite(int loggedInUser, int postID)
+        {
+            FavouritesList newEntry = new FavouritesList();
+            if (db.FavouritesLists.Where(x => (x.UserId == loggedInUser) && (x.PostId == postID)).Select(x => x.ID).Count() > 0)
+            { //They are unfavourating
+                int id = db.FavouritesLists.Where(x => (x.UserId == loggedInUser) && (x.PostId == postID)).Select(x => x.ID).FirstOrDefault();
+                newEntry = db.FavouritesLists.Find(id);
+                db.FavouritesLists.Remove(newEntry);
+                db.SaveChanges();
+                ViewBag.favourite = 1;
+            }
+            else
+            {//They are favourating
+                newEntry.PostId = postID;
+                newEntry.UserId = loggedInUser;
+                db.FavouritesLists.Add(newEntry);
+                db.SaveChanges();
+                ViewBag.favourite = 0;
+            }
+            return Json(new { newEntry, Status = "Ok", Error = "" });
+        }
     }
 }
 

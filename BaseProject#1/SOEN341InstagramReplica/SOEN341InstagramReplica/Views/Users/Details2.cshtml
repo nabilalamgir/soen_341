@@ -41,9 +41,21 @@
 @if (Session["username"] != null && Session["username"].ToString() == Model.user.Username)
 {
     <p>@Html.ActionLink("Delete my account", "Delete", new { id = Model.user.ID })</p>
+    <br />
+    <p>My Other Account</p>
+    <p>----------------</p>
+    if(Model.otherAccount != null)
+    {
+        <p>Switch to <a href="@Url.Action("SwitchAccount", "Users", new { otherAccountId = Model.otherAccount.ID })">@Model.otherAccount.Username.ToString()</a></p>
+        <p>@Html.ActionLink("Remove linked Account", "Delete", "LinkedAccounts", new { id = Model.otherAccount.ID}, null)</p>
 
-
-    <p></p>
+    }
+    else
+    {
+        
+          <p>@Html.ActionLink("Link other account", "LinkAccount")</p>
+    }
+    <br />
     <p>
         @Html.ActionLink("Create New Post", "Create", "UserPosts")
     </p>

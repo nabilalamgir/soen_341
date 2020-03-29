@@ -73,6 +73,23 @@ CREATE TABLE [dbo].[LikeDislikeList] (
 	
 );
 
+CREATE TABLE [dbo].[FavouritesList] (
+    [ID]            INT IDENTITY (1, 1) NOT NULL,
+    [UserId]        INT NOT NULL,
+    [PostId]        INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC),
+    FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([ID]),
+    FOREIGN KEY ([PostId]) REFERENCES [dbo].[UserPosts] ([ID]) ON DELETE CASCADE
+);
+
+CREATE TABLE [dbo].[LinkedAccounts] (
+    [ID]         INT IDENTITY (1, 1) NOT NULL,
+    [Account1ID] INT NOT NULL,
+    [Account2ID] INT NOT NULL,
+    FOREIGN KEY ([Account1ID]) REFERENCES [dbo].[Users] ([ID]),
+    FOREIGN KEY ([Account2ID]) REFERENCES [dbo].[Users] ([ID]) ON DELETE CASCADE
+);
+
 GO
 CREATE   TRIGGER [dbo].[delete_user_associated_content]
 ON [dbo].[Users] INSTEAD OF DELETE
@@ -84,5 +101,28 @@ select @ID = ID from deleted
 	delete from [dbo].[UserPosts] where [dbo].[UserPosts].[User_ID] = @ID
 	delete from [dbo].[FollowList] where [dbo].[FollowList].[FolloweeID] = @ID
 	delete from [dbo].[FollowList] where [dbo].[FollowList].[FollowerID] = @ID
-	delete from [dbo].[Users] where [dbo].[Users].[ID] = @ID
+	delete from [dbo].[LikeDislikeList] where [dbo].[LikeDislikeList].UserId = @ID
+	delete from [dbo].[FavouritesList] where [dbo].FavouritesList.UserId = @ID
+	delete from [dbo].[LinkedAccounts] where [dbo].[LinkedAccounts].[Account1ID] = @ID or [dbo].[LinkedAccounts].[Account2ID] = @ID
+	delete from [dbo].[Users] where [dbo].[Users].[ID] = @ID	
 END;
+
+CREATE TRIGGER [reduce_like_dislike_number]
+	ON [dbo].[LikeDislikeList]
+	FOR DELETE
+AS
+
+BEGIN
+	Declare @ID int
+	DECLARE @postID int;
+	select @ID = ID from deleted
+	select @postID = PostId from deleted
+
+	if
+	(select LikeOrDislike from LikeDislikeList where ID = @ID) > 1
+		update UserPosts set Dislikes = (Dislikes - 1) where UserPosts.ID = @postID;
+	else
+		update UserPosts set Likes = (Likes - 1) where UserPosts.ID = @postID;
+
+	delete from [dbo].[LikeDislikeList] where [dbo].[LikeDislikeList].[ID] = @ID
+	end;
