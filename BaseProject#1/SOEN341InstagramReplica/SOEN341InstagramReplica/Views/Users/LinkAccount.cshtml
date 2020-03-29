@@ -42,6 +42,6 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to post", "Details2", "Users", new { id = Session["id"] }, null)
+    </div>

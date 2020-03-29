@@ -327,9 +327,18 @@ namespace SOEN341InstagramReplica.Controllers
             }
             else
             {
-                //Check if this other account is already linked to be sure
+                
                 int userId = (int)(from x in db.Users where x.Username == model.Username.ToString() select x.ID).SingleOrDefault();
                 User user = db.Users.Find(userId);
+                //Check if trying to link to yourself
+                int loggedInId = (int)Session["id"];
+                if (user.ID == loggedInId)
+                {
+                    ModelState.AddModelError(string.Empty, "Cannot link to yourself");
+                    return View(model);
+                }
+
+                //Check if this other account is already linked to be sure
                 if (db.LinkedAccounts.Where(x=>x.Account1ID == user.ID || x.Account2ID == user.ID).Count() == 0)
                 {
                     LinkedAccount newLink = new LinkedAccount();
@@ -359,30 +368,5 @@ namespace SOEN341InstagramReplica.Controllers
             return RedirectToAction("Details2", "Users", new { id = otherAccountId });
         }
 
-        public ActionResult RemoveLink()
-        {
-            int id = (int) Session["id"];
-
-            id = db.LinkedAccounts.Where(x => x.Account1ID == id || x.Account2ID == id).Select(x=>x.ID).First();
-            LinkedAccount user = db.LinkedAccounts.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult RemoveLinkConfirmed(int id)
-        {
-            LinkedAccount user = db.LinkedAccounts.Find(id);
-            int userId = id;
-            db.LinkedAccounts.Remove(user);
-            db.SaveChanges();
-            Session.RemoveAll();
-            return RedirectToAction("Details2", "Users", new { id = (int)Session["id"] });
-        }
     }
 }

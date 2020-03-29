@@ -264,7 +264,6 @@
     <Content Include="Views\Home\Trending.cshtml" />
     <Content Include="Views\Users\MyFavourites.cshtml" />
     <Content Include="Views\Users\LinkAccount.cshtml" />
-    <Content Include="Views\Users\RemoveLink.cshtml" />
     <Content Include="Views\LinkedAccounts\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
