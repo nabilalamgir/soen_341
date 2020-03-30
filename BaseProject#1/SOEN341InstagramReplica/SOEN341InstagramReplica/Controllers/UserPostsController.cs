@@ -22,21 +22,6 @@ namespace SOEN341InstagramReplica.Controllers
         }
 
         // GET: UserPosts/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserPost userPost = db.UserPosts.Find(id);
-            if (userPost == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userPost);
-        }
-
-        // GET: UserPosts/Details/5
         public ActionResult Details2(int? id)
         {
             if (id == null)
