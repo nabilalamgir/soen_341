@@ -191,18 +191,30 @@ namespace SOEN341InstagramReplica.Controllers
 
         public ActionResult Trending()
         {
+            //This will get the current week
             DateTime this_Week = DateTime.Today.AddDays((int)CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek - (int)DateTime.Today.DayOfWeek);
-            DateTime startWeek = this_Week.AddDays(0);
-            DateTime endWeek = this_Week.AddDays(7);
+            DateTime startWeek = this_Week.AddDays(0); //Sunday at 12am
+            DateTime endWeek = this_Week.AddDays(7); //The next sunday at 12am
 
-//System.Diagnostics.Debug.WriteLine(result);
-            System.Diagnostics.Debug.WriteLine("Start of the Week: "+ startWeek);
-            System.Diagnostics.Debug.WriteLine("End of the Week: " + endWeek);
+            //This will retrieve from DB, pictures that will be post this week.
+            //It will be sorted from the most liked picture and it will take the first 5.
             List<UserPost> lst_posts = new List<UserPost>();
             var posts = (from x in db.UserPosts select x).OrderByDescending(p => p.Likes).Where(p => p.Date_Posted >= startWeek && p.Date_Posted < endWeek).Take(5);
             lst_posts = posts.ToList();
             return View(lst_posts);
         }
 
+        public ActionResult Recent()
+        {
+            DateTime yesterday = DateTime.Today.AddDays(-1); //Yesterday at 12AM
+            DateTime today = DateTime.Today.AddDays(1); //Tommorow at 12AM
+
+            //This will retrieve from DB, pictures posted yesterday and today.
+            //It will be sorted from latest date.
+            List<UserPost> lst_posts = new List<UserPost>();
+            var posts = (from x in db.UserPosts select x).OrderByDescending(p => p.Date_Posted).Where(p => p.Date_Posted >= yesterday && p.Date_Posted < today);
+            lst_posts = posts.ToList();
+            return View(lst_posts);
+        }
     }
 }

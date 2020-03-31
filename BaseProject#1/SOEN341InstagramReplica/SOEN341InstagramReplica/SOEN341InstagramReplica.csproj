@@ -260,6 +260,7 @@
     <Content Include="Views\Users\MyFavourites.cshtml" />
     <Content Include="Views\Users\LinkAccount.cshtml" />
     <Content Include="Views\LinkedAccounts\Delete.cshtml" />
+    <Content Include="Views\Home\Recent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
