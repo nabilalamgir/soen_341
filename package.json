@@ -1,16 +1,16 @@
 {
   "name": "soen_341",
-  "description": "Instagram Project",
-  "version": "1.0.0",
-  "main": "index.html",
-  "author": "MM",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "custom-install": "cd packages/template-icons && yarn",
+    "build": "cd packages/template-icons && yarn build"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "parcel-bundler": "^1.6.1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nabilalamgir/soen_341"
   },
-  "keywords": ["portfolio", "vanilla js"]
+  "installConfig": {
+    "pnp": true
+  }
 }
