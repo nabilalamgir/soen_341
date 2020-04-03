@@ -1,0 +1,121 @@
+<!-- naming convention as follows:
+		class="container-element" 
+	for the dynamically loaded content, use two classes: 
+		this one is for styling across all pages: class="container-element"
+		this one is for CSS that is dynamically loaded, or page-specific:
+			class="page-element" -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head> <!-- head signifies metadata:not visible to user -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+	<title>Portfolio</title>
+    
+  <!-- here are the links to my local CSS
+  	note: these are site-wide styles. specific styles will be in a specific location,
+		along with the HTML templates for those objects, linked within the template. -->
+	<link rel="stylesheet" href="styles.css">
+
+</head>
+
+
+<body id="root-container">
+
+
+<!-- the navbar will be the same across all pages, thus excluded from body.
+	this is the container our navbar is dynamically rendered in. -->
+<nav id="navbar" class="nav-container">
+
+	<!-- here is where the navbar should render. -->
+
+</nav>
+
+
+<!-- hero-specific to the page. so the hero is located in it's page template. -->
+<div id="hero" class="hero-container">
+
+	<!-- here's where the hero content will be rendered. -->
+
+</div>
+
+
+<!-- body will be dynamically rendered by JS framework, or everything in body.
+	on page load of the container: load the default page. may need to change with
+	multiple pages. -->
+<div id="body" class="page-container">
+
+	<!-- here's where the page will be dynamically rendered. "body" is the
+		page-container. I think at some point everything will be dynamically rendered,
+		except for maybe things like the navbar, and maybe a sidebar. -->
+
+</div>
+
+
+<!-- footer is it's own component as well. -->
+<footer id="footer" class="footer-container">
+
+	<!-- footer will be rendered here. -->
+
+</footer>
+
+
+</body>
+
+
+
+<!-- here's my actual app. as things get bigger and export/import becomes available,
+	we may rethink inserting a script tag for every file needed. this works for now. -->
+
+<!-- update from above - 4/9/18 - I think I need to keep the views and controllers
+	together, at least for now. I don't yet see a purpose for having them separate,
+	especially for the root components and pages. Perhaps as I build items that are
+	going to be nested inside them, we will have those views and controllers in separate
+	files for readability and modularity. -->
+
+<!-- I'm going to load the templates first so they are ready to be called. -->
+<!-- navbar templates -->
+<script src="app/root-components/navbar/templates.js"></script>
+<!-- page-1 templates -->
+<script src="app/page1-home/templates.js"></script>
+<!-- footer templates -->
+<script src="app/root-components/footer/templates.js"></script>
+
+	
+<!-- After utilities is loaded, the default view for Home is invoked. -->
+<script src="app/root-views.js"></script>
+<!-- Then the controller is invoked by request from the API. -->
+<script src="app/root-controllers.js"></script>
+<!-- The controller requests the templates/content from templates.
+	Then calls render in the API. Render inserts the content. -->
+
+
+<!-- My library, a work in progress. These objects are hidden to the global object.
+	Note that this is separate from my SPA functionality. -->
+<script src="src/Glass-1.js"></script>
+<!-- Used for general js. Currently adds functionality for the sticky navbar.
+	NOT the root of SPA/framework either. -->
+<script src="app.js"></script>
+
+
+<!-- My SPA backbone. Could be considered the API? Unlike Glass, my utilities
+	are located on the global object. The onload events here are set to render
+	the components I want to be loaded by default on page load. I think it may be
+	better to have these here, to ensure whenever someone navigates around the site,
+	we aren't reloading anything that isn't requested. Since the html is dynamically
+	requested, these page load events should only fire once, since we are not
+	requesting this html page more than once. -->
+
+<!-- Maybe another reason for this process of dynamically rendering into a shell,
+	is that I can control in what sequence things are loaded, visualized by how my
+	router is invoked below. I just encountered an error inserting my footer, but
+	everything else loaded just fine. Similarily, if I have a lot of data in the picture
+	I'm loading in my hero, somebody with a slow connection can go ahead and start reading
+	the page content since it is the first thing to be loaded below. This is due to
+	Javascript being a synchronous language, that is only handling one request at a time. -->
+	
+<script src="app/utilities-1.js" 
+onload = "utils.router (); utils.router ('navbar'); utils.router ('footer');">
+</script>
+
+</html>
