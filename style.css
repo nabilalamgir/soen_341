@@ -1,0 +1,65 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+/* here we declare the areas */
+#hero {
+  grid-area: hero;
+}
+#navbar {
+  grid-area: navbar;
+}
+#body {
+  grid-area: main;
+}
+#footer {
+  grid-area: footer;
+}
+
+/* here we declare the space in the root grid */
+#root-container {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-areas: 
+    "hero hero hero hero"
+    "navbar navbar navbar navbar"
+    "main main main main"
+    "footer footer footer footer";
+}
+
+
+html {
+  background-color: red;
+}
+
+
+
+
+/* here we style the content using the generic classes, styling across
+all pages. */
+.page-header {
+  text-align: justify;
+  padding-left: 30px;
+  font-size: 40px;
+}
+
+.page-intro {
+  font-size: 20px;
+}
+
+
+/* we need to style html inside the page-container here separately so
+that the CSS can be dynamically inserted when needed as well.
+this is for styling specific to a certain page. */
+.home-about{
+  text-align: justify;
+}
+
+  .about-header {
+    font-size: 30px;
+  }
