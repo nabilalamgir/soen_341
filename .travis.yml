@@ -1,2 +1,7 @@
 language: csharp
-solution: SOEN341InstagramReplica.sln
+solution: "./SOEN341InstagramReplica.sln"
+install:
+- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./SOEN341InstagramReplica.sln
+script:
+- xbuild ./SOEN341InstagramReplica.sln
+- mono ./SOEN341InstagramReplica/packages/xunit.runner.console*/tools/xunit.console.exe ./SOEN341InstagramReplica.Tests/bin/Debug/SOEN341InstagramReplica.Tests.dll
