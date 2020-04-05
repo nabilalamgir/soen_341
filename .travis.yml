@@ -1,2 +1,3 @@
 language: csharp
 solution: SOEN341InstagramReplica.sln
+script: ./build.sh
