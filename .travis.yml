@@ -1,3 +1,3 @@
 language: csharp
-solution: ./SOEN341InstagramReplica/SOEN341InstagramReplica.sln
-install: nuget restore ./SOEN341InstagramReplica/SOEN341InstagramReplica.sln
+solution: ./BaseProject#1/SOEN341InstagramReplica/SOEN341InstagramReplica.sln
+install: nuget restore ./BaseProject#1/SOEN341InstagramReplica/SOEN341InstagramReplica.sln
