@@ -1,3 +1,3 @@
 language: csharp
 solution: SOEN341InstagramReplica.sln
-script: ./build.sh
+script: - xbuild /p:VbcToolExe=vbnc.exe SOEN341InstagramReplica.sln
