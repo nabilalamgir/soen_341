@@ -71,7 +71,7 @@ namespace SOEN341InstagramReplica.Controllers
             }
             UserAndPosts user = new UserAndPosts();
             user.user = db.Users.Find(id);
-            user.posts = (from x in db.UserPosts where x.User_ID == id select x);
+            user.posts = (from x in db.UserPosts where x.User_ID == id select x).ToList();
             
             /*
              * There are several situations when it comes to being able to follow
