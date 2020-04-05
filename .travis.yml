@@ -1,13 +1,7 @@
-travis encrypt e7e20e48c21a8a031dd233dcee3fa0a83b225896
-
+language: csharp
 dist: trusty
-
-addons:
-  sonarcloud:
-    organization: "nabilalamgir"
-    token:
-      secure: "**************************" # encrypted value of your token
-
+mono: none
+dotnet: 2.0.0
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - sonar-scanner
+  - dotnet restore
+  - dotnet build
