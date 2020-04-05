@@ -1,17 +1,13 @@
-language: csharp
-mono: none
-dotnet: 4.6.1
+travis encrypt e7e20e48c21a8a031dd233dcee3fa0a83b225896
+
+dist: trusty
 
 addons:
   sonarcloud:
-    organization: "nabilalamgir-github"
-
-before_install:
-- bash ./tools/travis-ci-install-sonar.sh
-
-install:
-- dotnet restore src
+    organization: "nabilalamgir"
+    token:
+      secure: "**************************" # encrypted value of your token
 
 script:
- - bash ./tools/travis-ci-build.sh
-
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - sonar-scanner
