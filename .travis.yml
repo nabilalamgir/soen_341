@@ -1,7 +1,16 @@
 language: csharp
-dist: trusty
 mono: none
-dotnet: 2.0.0
+dotnet: 4.6.1
+
+addons:
+  sonarcloud:
+    organization: "nabilalamgir-github"
+
+before_install:
+- bash ./tools/travis-ci-install-sonar.sh
+
+install:
+- dotnet restore src
+
 script:
-  - dotnet restore
-  - dotnet build
+ - bash ./tools/travis-ci-build.sh
