@@ -1,27 +1,26 @@
 {
   "name": "soen_341",
-  "version": "1.0.0",
-  "description": "SOEN341InstagramReplica",
-  "private": true,
+  "version": "1.0.3",
+  "description": "Fetch files from a git repository and upload them to CodeSandbox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nabilalamgir/soen_341",
+    "directory": ""
+  },
+  "license": "MIT",
+  "author": "Nabil Alamgir",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
   "scripts": {
-    "build": "yarn build:dependencies && lerna run build --scope codesandbox --scope git-converter --parallel",
-    "build:git-extractor": "yarn build:dependencies && lerna run build --scope git-converter",
-    "build:dependencies": "lerna run build --scope codesandbox-import-utils --scope codesandbox-import-util-types --stream",
-    "test": "lerna run test",
-    "start": "lerna run start --stream"
+    "build": "babel src -d dist --ignore  **/*.test.js"
   },
-  "author": "",
-  "devDependencies": {
-    "jest": "^23.6.0",
-    "lerna": "^2.4.0",
-    "rimraf": "^2.6.2",
-    "ts-jest": "^23.10.4",
-    "typescript": "^3.5.3"
-  },
-  "workspaces": [
-    "packages/cli",
-    "packages/git-extractor",
-    "packages/import-utils",
-    "packages/types"
-  ]
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "form-data": "^2.3.2",
+    "isomorphic-unfetch": "^2.0.0",
+    "lz-string": "^1.4.4",
+    "path-browserify": "^1.0.0"
+  }
 }
