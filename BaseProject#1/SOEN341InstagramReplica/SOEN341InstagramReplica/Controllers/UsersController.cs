@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList.Mvc;
+using PagedList;
 using SOEN341InstagramReplica.Models;
 
 namespace SOEN341InstagramReplica.Controllers
@@ -61,7 +63,7 @@ namespace SOEN341InstagramReplica.Controllers
         }
 
         // GET: Users/Details/5
-        public ActionResult Details2(int? id)
+        public ActionResult Details2(int? id, string sortOrder, string currentFilter, int? page, string postAndOrUsername)
         {
             if (id == null)
             {
@@ -83,7 +85,7 @@ namespace SOEN341InstagramReplica.Controllers
                Session["username"].ToString() == user.user.Username)
             {
                 user.following = "invalid";
-                if (Session["username"].ToString() == user.user.Username)
+                if (Session["username"] == null || Session["username"].ToString() == user.user.Username)
                 {
                     if (db.LinkedAccounts.Where(x => x.Account1ID == id || x.Account2ID == id).Count() > 0)
                     {
@@ -120,10 +122,53 @@ namespace SOEN341InstagramReplica.Controllers
                 user.otherAccount = null;
             }
 
-            if (user == null)
+            //Sorting the Table
+            ViewBag.CurrentSort = sortOrder;
+            List<string> list = new List<string>();
+            list.Add("Post Title");
+            list.Add("Username");
+            list.Add("Both");
+            ViewBag.PostAndOrUsername = new SelectList(list);
+            ViewBag.SelectedPostAndOrUsername = postAndOrUsername;
+            ViewBag.DateSortParm = String.IsNullOrEmpty(sortOrder) ? "date_asc" : "";
+            ViewBag.TitleSortParm = sortOrder == "Title" ? "title_desc" : "Title";
+            ViewBag.LikesSortParm = sortOrder == "Likes" ? "likes_desc" : "Likes";
+            ViewBag.DislikesSortParm = sortOrder == "Dislikes" ? "dislikes_desc" : "Dislikes";
+            ViewBag.UserNameSortParm = sortOrder == "UserName" ? "userName_desc" : "UserName";
+            page = 1;
+            switch (sortOrder)
             {
-                return HttpNotFound();
+                case "date_asc":
+                    user.posts = user.posts.OrderBy(p => p.Date_Posted);
+                    break;
+                case "title_desc":
+                    user.posts = user.posts.OrderByDescending(p => p.Title);
+                    break;
+                case "Title":
+                    user.posts = user.posts.OrderBy(p => p.Title);
+                    break;
+                case "likes_desc":
+                    user.posts = user.posts.OrderByDescending(p => p.Likes);
+                    break;
+                case "Likes":
+                    user.posts = user.posts.OrderBy(p => p.Likes);
+                    break;
+                case "dislikes_desc":
+                    user.posts = user.posts.OrderByDescending(p => p.Dislikes);
+                    break;
+                case "Dislikes":
+                    user.posts = user.posts.OrderBy(p => p.Dislikes);
+                    break;
+                default:
+                    user.posts = user.posts.OrderByDescending(p => p.Date_Posted);
+                    break;
             }
+            //End of sorting the Table
+
+            /* USE FOR PAGING THE TABLE
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            */
             return View(user);
         }
 
@@ -367,6 +412,5 @@ namespace SOEN341InstagramReplica.Controllers
             Session["role"] = otherUser.Role.ToString();
             return RedirectToAction("Details2", "Users", new { id = otherAccountId });
         }
-
     }
 }
