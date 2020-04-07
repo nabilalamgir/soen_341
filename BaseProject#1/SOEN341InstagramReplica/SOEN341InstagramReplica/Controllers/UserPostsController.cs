@@ -72,8 +72,9 @@ namespace SOEN341InstagramReplica.Controllers
         }
 
         // GET: UserPosts/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
+            ViewBag.ID = id;
             ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name");
             return View();
         }
@@ -137,7 +138,7 @@ namespace SOEN341InstagramReplica.Controllers
                 newUserPostDetails.Description = userPost.Description;
                 db.Entry(newUserPostDetails).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details2", "Users", new { id = Session["id"] });
             }
             ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", userPost.User_ID);
             return View(userPost);

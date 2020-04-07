@@ -58,7 +58,7 @@
     </div>
     <br />
     <p>
-        @Html.ActionLink("Create New Post", "Create", "UserPosts")
+        @Html.ActionLink("Create New Post", "Create", "UserPosts", new { id = @Model.user.ID }, null)
     </p>
 }
 <p>My Posts</p>
