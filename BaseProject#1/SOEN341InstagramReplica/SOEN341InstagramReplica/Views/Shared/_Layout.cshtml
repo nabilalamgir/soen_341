@@ -8,47 +8,83 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @{ 
+        List<string> glist = new List<string>();
+        glist.Add("Post Title");
+        glist.Add("Username");
+        ViewBag.PostAndOrUsername = new SelectList(glist);
+     }
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+                
+              
+
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Trending", "Trending", "Home", new {area = ""}, new {@class = "navbar-brand"})
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <!--
-                        Code below
-                        This will check t=if the username has been saved in the session["username"]
-                        and if there is, then a link to the user's profile will appear with their
-                        username as the visual as well as the option to log out
-                    -->
-                        @if (Session["username"] != null)
-                        {
-                            <li><a href="@Url.Action("Index", "Home")">
-                            @Session["username"]</a></li>
-                            <li>
-                                <a href="@Url.Action("SignOut", "Home")">Sign Out</a>
-                            </li>
+    Code below
+    This will check t=if the username has been saved in the session["username"]
+    and if there is, then a link to the user's profile will appear with their
+    username as the visual as well as the option to log out
+    -->
+                    @if (Session["username"] != null)
+                    {
+                        <li>
+                            <a href="@Url.Action("Details2", "Users", new { id = Session["id"] }, null)">
+                                @Session["username"]
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("MySubscriptions", "Users", new { id = Session["id"] }, null)">
+                                My Subscriptions
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("MyFavourites", "Users", new { id = Session["id"] }, null)">
+                                My Favourites
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("SignOut", "Home")">Sign Out</a>
+                        </li>
 
-                        }
-                        else/*This means that no one is logged in
-                            Meaning the user will have the option to either sign up and create
-                            an account or login to an existing one
-                            */
-                        {
-                            <li><a href="@Url.Action("SignUp", "Home")">Sign Up</a></li>
-                            //Placeholder until login functionality ready
-                            <li>Login</li>
-                        }
                     }
-</ul>
+                    else
+                    {/*This means that no one is logged in.
+                                    Meaning the user will have the option to either sign up and create
+                                    an account or login to an existing one
+                                    */
+
+
+
+
+                        <li>
+                            <a href="@Url.Action("SignUp", "Home")">Sign Up</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Login", "Home")">Login</a>
+                        </li>
+                    }
+                        <li style="padding: 12px 15px;">
+                            @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                            {
+                                @Html.DropDownList("PostAndOrUsername", (SelectList)ViewBag.PostAndOrUsername, null, new { id = "postAndOrUsername" })
+                                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {style = "margin-left: 3px" })
+                                <input type="submit" value="Search" style="margin-left: 3px"/>
+                            }
+                        </li>
+                    
+
+                </ul>
             </div>
         </div>
     </div>
@@ -56,7 +92,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - QuickGram</p>
         </footer>
     </div>
 
