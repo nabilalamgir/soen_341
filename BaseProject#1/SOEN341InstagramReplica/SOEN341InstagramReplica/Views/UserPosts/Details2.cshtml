@@ -106,7 +106,6 @@
            value="Favourite" class="btn btn-default" onclick="ChangeFavourite()" />
     
 }
-<h2>Post</h2>
 <h1>Title: @Model.post.Title</h1>
 <p>Likes: @Model.post.Likes Dislikes: @Model.post.Dislikes</p>
 <h1>User: @Html.ActionLink(Model.postUserName.ToString(), "Details2", "Users", new { id = Model.post.User_ID }, null)</h1>
@@ -118,7 +117,8 @@
 
 
 <img src='@imgsrc' style="max-width:75%;max-height:75%" />
-<p>-----</p>
+<br />
+<p>Comments</p>
 @if (Session["username"] != null)
 {
     @Html.ActionLink("Create New Comment", "Create", "Comments", new { id = Model.post.ID }, null)

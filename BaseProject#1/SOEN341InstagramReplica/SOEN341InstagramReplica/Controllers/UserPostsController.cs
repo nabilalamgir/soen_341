@@ -17,8 +17,20 @@ namespace SOEN341InstagramReplica.Controllers
         // GET: UserPosts
         public ActionResult Index()
         {
-            var userPosts = db.UserPosts.Include(u => u.User);
-            return View(userPosts.ToList());
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else if (Session["role"].ToString() == "ADMIN")
+            {
+                var userPosts = db.UserPosts.Include(u => u.User);
+                return View(userPosts.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Details2", "Users", new { id = Session["id"] });
+            }
+            
         }
 
         // GET: UserPosts/Details/5
@@ -302,30 +314,3 @@ namespace SOEN341InstagramReplica.Controllers
         }
     }
 }
-
-/*CODE BEING KEPT IN CASE
- WILL DELETE BEFORE END OF PROJECT
-
-                //if (image != null)
-                //{
-                //    userPost.POST = new byte[image.ContentLength];
-                //    image.InputStream.Read(userPost.POST, 0, image.ContentLength);
-                //}
-                //if (image == null)
-                //{
-                //    HttpPostedFileBase file = Request.Files["imgsrc"];
-                //    if (file != null)
-                //    {
-                //        System.Diagnostics.Debug.WriteLine("NOT Null");
-                //        userPost.POST = new byte[file.ContentLength];
-                //        file.InputStream.Read(userPost.POST, 0, file.ContentLength);
-                //    }
-                //    System.Diagnostics.Debug.WriteLine("NULL");
-                //}
- 
-
-
-
-
-
-*/

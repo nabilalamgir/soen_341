@@ -72,40 +72,6 @@ namespace SOEN341InstagramReplica.Controllers
             return View(comment);
         }
 
-        // GET: Comments/Create/1
-        public ActionResult Create(int? id)
-        {
-            
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            ViewBag.ID = id;
-            Session["currentPost"] = id;
-            ViewBag.Post_ID = new SelectList(db.UserPosts, "ID", "Title");
-            ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name");
-            return View();
-        }
-
-        // POST: Comments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Comment1,User_ID,Username,Post_ID")] Comment comment)
-        {
-            comment.User_ID = (int) Session["id"];
-            comment.Post_ID = (int)Session["currentPost"];
-            comment.Username = Session["username"].ToString();
-            if (ModelState.IsValid)
-            {
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                return RedirectToAction("Details2", "UserPosts", new { id = comment.Post_ID });
-            }
-            return View(comment);
-        }
-
         // GET: Comments/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -140,6 +106,43 @@ namespace SOEN341InstagramReplica.Controllers
             ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", comment.User_ID);
             return View(comment);
         }
+        //////////////////////END OF DEV CODE///////////////////////////////////////
+        ///
+        // GET: Comments/Create/1
+        public ActionResult Create(int? id)
+        {
+            
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.ID = id;
+            Session["currentPost"] = id;
+            ViewBag.Post_ID = new SelectList(db.UserPosts, "ID", "Title");
+            ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name");
+            return View();
+        }
+
+        // POST: Comments/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,Comment1,User_ID,Username,Post_ID")] Comment comment)
+        {
+            comment.User_ID = (int) Session["id"];
+            comment.Post_ID = (int)Session["currentPost"];
+            comment.Username = Session["username"].ToString();
+            if (ModelState.IsValid)
+            {
+                db.Comments.Add(comment);
+                db.SaveChanges();
+                return RedirectToAction("Details2", "UserPosts", new { id = comment.Post_ID });
+            }
+            return View(comment);
+        }
+
+        
 
         // GET: Comments/Delete/5
         public ActionResult Delete(int id)
