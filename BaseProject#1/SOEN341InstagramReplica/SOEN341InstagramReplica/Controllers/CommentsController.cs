@@ -133,12 +133,14 @@ namespace SOEN341InstagramReplica.Controllers
             comment.User_ID = (int) Session["id"];
             comment.Post_ID = (int)Session["currentPost"];
             comment.Username = Session["username"].ToString();
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !String.IsNullOrWhiteSpace(comment.Comment1))
             {
                 db.Comments.Add(comment);
                 db.SaveChanges();
                 return RedirectToAction("Details2", "UserPosts", new { id = comment.Post_ID });
             }
+            ModelState.AddModelError(string.Empty, "Comment cannot be empty");
+
             return View(comment);
         }
 

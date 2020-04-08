@@ -103,6 +103,7 @@ namespace SOEN341InstagramReplica.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,Description,POST,Likes,Dislikes,Rating,Date_Posted,User_ID")] UserPost userPost, HttpPostedFileBase image)
         {
+            
             if (ModelState.IsValid && image != null &&
                 (image.ContentType == "image/png" || image.ContentType == "image/jpeg"))
             {
@@ -111,6 +112,13 @@ namespace SOEN341InstagramReplica.Controllers
                 {
                     userPost.POST = new byte[image.ContentLength];
                     image.InputStream.Read(userPost.POST, 0, image.ContentLength);
+                }
+
+                if (String.IsNullOrWhiteSpace(userPost.Title) || String.IsNullOrWhiteSpace(userPost.Description))
+                {
+                    ModelState.AddModelError(string.Empty, "title or description missing");
+                    ViewBag.User_ID = new SelectList(db.Users, "ID", "First_Name", userPost.User_ID);
+                    return View(userPost);
                 }
                 userPost.User_ID = (int)Session["id"];
                 userPost.Rating = userPost.Likes = userPost.Dislikes = 0;
