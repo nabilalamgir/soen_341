@@ -79,7 +79,7 @@ namespace SOEN341InstagramReplica.Controllers
                     ModelState.Clear();
                     ViewBag.SuccessMessage = "Registration Successful";
                     Session["id"] = model.ID;
-                    Session["username"] = model.First_Name;
+                    Session["username"] = model.Username.ToString();
                     Session["role"] = model.Role.ToString();
                     return RedirectToAction("Index");                    
                 }

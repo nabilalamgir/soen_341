@@ -42,32 +42,42 @@
 {
     <p>@Html.ActionLink("Delete my account", "Delete", new { id = Model.user.ID })</p>
     <br />
-    <p>My Other Account</p>
+    <div style="line-height: 0.5">
+    <p >My Other Account</p>
     <p>----------------</p>
-    if(Model.otherAccount != null)
+    @if(Model.otherAccount != null)
     {
         <p>Switch to <a href="@Url.Action("SwitchAccount", "Users", new { otherAccountId = Model.otherAccount.ID })">@Model.otherAccount.Username.ToString()</a></p>
-        <p>@Html.ActionLink("Remove linked Account", "Delete", "LinkedAccounts", new { id = Model.otherAccount.ID}, null)</p>
+        <p style="line-height: 0.8">@Html.ActionLink("Remove linked Account", "Delete", "LinkedAccounts", new { id = Model.otherAccount.ID}, null)</p>
 
     }
     else
     {
-        
           <p>@Html.ActionLink("Link other account", "LinkAccount")</p>
     }
+    </div>
     <br />
     <p>
-        @Html.ActionLink("Create New Post", "Create", "UserPosts")
+        @Html.ActionLink("Create New Post", "Create", "UserPosts", new { id = @Model.user.ID }, null)
     </p>
 }
 <p>My Posts</p>
 <table class="table">
     <tr>
         <th>
-            Title
+            @Html.ActionLink("Title", "Details2", new { sortOrder = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername })
         </th>
         <th>
-            POST
+            Post
+        </th>
+        <th>
+            @Html.ActionLink("Likes", "Details2", new { sortOrder = ViewBag.LikesSortParm, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername })
+        </th>
+        <th>
+            @Html.ActionLink("Dislikes", "Details2", new { sortOrder = ViewBag.DislikesSortParm, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername })
+        </th>
+        <th>
+            @Html.ActionLink("Date Posted", "Details2", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter, postAndOrUsername = ViewBag.SelectedPostAndOrUsername })
         </th>
         <th></th>
     </tr>
@@ -82,6 +92,15 @@
                 }
 
                 <img src='@imgsrc' style="max-width:50px;max-height:50px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => post.Likes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => post.Dislikes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => post.Date_Posted)
             </td>
             @if (Session["username"] != null && Session["username"].ToString() == Model.user.Username)
             {
