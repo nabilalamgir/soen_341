@@ -1,0 +1,8 @@
+The .travis.yml file has been successfully created with the correct path. The following steps are to have a build that passes.
+
+1. Link your Github account with your Travis CI.
+2. In the settings, enable the repo you want to work with.
+3. Under “My Account”, click on “Sync account”. This will sync the account with the latest master build.
+4. Click on Travis CI
+5. Click on “More options” > Trigger Build > Branch = master > Commit Message = build.
+6. Click on “Trigger Custom Build”. The build is done after a few minutes.
