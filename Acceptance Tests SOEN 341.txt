@@ -1,0 +1,631 @@
+Test Case US #5:
+	Posting a Picture/Video
+	
+
+	Pre-Condition:
+	Application launched and logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Press on the Upload button
+	This will access your photo and video gallery 
+	As Expected
+	2.  Choose the desired attachment 
+	Only one can be chosen at the time
+	As Expected
+	3. Click upload
+	//see if a message of successful/failure shows
+	As Expected
+	Result:
+Pass
+	 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #6
+	Follow a user
+	
+
+	Pre-Condition:
+	Application launched and logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Press the search bar
+	This will prompt you to the handle’s page
+	As Expected
+	2.  Search for the handle 
+	This will bring the user to the handle page, where he can see the handle’s follow button and their posts.
+	As Expected
+	3. Click on the “Follow” button
+	This will prompt a request to the handle
+	As Expected
+	4. Handle accepts the request
+	The user is now following the handle.
+If you refresh the page, the button on the handle’s page changes to “Unfollow”
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+** if you do not follow , can you leave a comment ? 
+
+
+Test Case: US #7
+	Comment on a post
+	
+
+	Pre-Condition:
+	Application launched and logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Press on the comments section
+	This will enable the user to put a comment
+	As Expected
+	2.  Write a comment
+	The user should be able to write anything that is a character (letters, numbers,special characters,etc...)
+	As Expected
+	3. Press on the send comment
+	This will make the comment valid
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #10
+	Login
+	
+
+	Pre-Condition:
+	Application launched and logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Type in your username
+	You can write your case sensitive username in the appropriate box.
+	As Expected
+	2.  Type in your password
+	You can write your case sensitive password on the appropriate box.
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #11
+	Sign Up
+	
+
+	Pre-Condition:
+	User is on the website
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Type in your first name
+	You can see the characters being typed.
+	As Expected
+	2. Type in your last name
+	You can see the characters being typed.
+	As Expected
+	3. Type in your Username
+
+
+	You can see the characters being typed.
+	As Expected
+	4. Type in your password
+	The password is encrypted
+	As Expected
+	5.  Type in your email address
+	You can see the characters being typed.
+	As Expected
+	6. Press the Sign Up button
+	The user will be sent to their main page
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+Test Case: US #14
+	Overview of posts
+	
+
+	Pre-Condition:
+	Application launched and logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Click on you username handle
+	You should be on your profile page as well as all the posts associated with it. 
+	As Expected
+	2. Click on one of your posts.
+	It displays the post that you clicked on. 
+	As Expected
+	Result:
+Pass
+	
+
+Test Case: US #15
+	View list of followees
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	4. Press on the “My Subscriptions” button on the menu bar  
+	This will bring the user to the “My Subscriptions” page.
+	As Expected
+	5.  The list of the users that follows you will appear
+	The user will be able to see the username, latest post and link to the post of the followees.
+	As Expected
+	Result:
+Pass
+	
+
+Test Case: US #16
+	List of Followers
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Click on the “My Subscriptions” tab in the menu bar.
+	You should be prompted to a page where you see all the users that are following you
+	As Expected
+	2. All the subscribers that the user follows will be shown.
+	The username,latest post and link to post will be shown.
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #17
+	Delete Account
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Click on your profile. This can be found on the menu bar.
+	You should be on your profile page.
+	As Expected
+	2. Click on the “delete my account” button to delete the account
+	This should ask you if you are sure you want to delete your account. 
+	As Expected
+	3. Confirm the account deletion.
+	If you refresh the page, you should not be able to log in. You should not be able to complete US #10.
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #18
+	Account Security 
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Click on your profile. This can be found on the menu bar.
+	You should be on your profile page.
+	As Expected
+	2. Click on your privacy settings.        
+	You should be prompted to your privacy settings.
+	As Expected
+	3. Modify some privacy settings and confirm the changes. 
+	Refresh the page and repeat steps 1 and 2. The privacy settings should be updated. 
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #67
+	Rate a post 
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Click on any post.
+	The page should now be focused solely on the clicked post.
+	As Expected
+	2. “Rate” the post by clicking the appropriate button.
+
+
+	Clicking the button will add rating to a post and update its overall rating#69
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #70
+	View a list of new posts
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Go on the page where you can view all the posts (trending page).
+	You should be on your feed, where all the posts from your followees appear. 
+	As Expected
+	2. Change the order by choosing newest post
+	You should see the 5 newest post on the trending page.
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #73
+	List of most popular post
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Go on the filter option
+	A list of filters should appear
+	As Expected
+	2. Choose the filter type: In this case, it is to list the post by the most rated. 
+	You should see the posts on your feed starting with the most rated to the least rated. 
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #86
+	Search post by title or handles username
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Press on the search bar that is located in the menu bar
+	The blinker should appear.
+	As Expected
+	2. Select if you wish to search by title post or username
+	The proper selection should appear. 
+	As Expected
+	3. Enter your desired search and press enter
+	The system should show the results of the desired search.
+	As Expected
+	4. The list of posts/username will be shown in the “search” page
+	The handlers username, post title, the post, # of likes, # of dislikes, date and time should be shown. 
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #92
+	Link multiple accounts 
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. Create two different accounts.
+	You should be able to log in both accounts once they are created. 
+	As Expected
+	2. Once you are signed in to one account, switch to the other one by clicking on your second account username.
+	You should be able to link the accounts and switch back and forth without having to sign in to the other one. 
+	As Expected
+	Result:
+Pass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Case: US #96
+	Mark post as favorite and view a list of favorites
+	
+
+	Pre-Condition:
+	Application launched ,logged in
+	
+
+	Steps:
+	Expected Results
+	Actual Results
+	1. On a handle’s post, press ‘mark as favorite”
+	The following post will be set in the favourites list
+	As Expected
+	2. Press on “my favorites” button in the menu bar
+	The user will be sent to the favorites page. 
+The list of the favorite posts will be displayed.
+Link o post will also be there as a clickable link. 
+	As Expected
+	Result:
+Pass
